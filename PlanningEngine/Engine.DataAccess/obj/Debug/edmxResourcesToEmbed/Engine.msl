@@ -1,0 +1,475 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2008/09/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="DisneyHCMLatamPlanningDevModelStoreContainer" CdmEntityContainer="DisneyHCMLatamPlanningEntities">
+    <FunctionImportMapping FunctionImportName="AddCurrentPositionsToSBForecastPlan" FunctionName="DisneyHCMLatamPlanningDevModel.Store.AddCurrentPositionsToSBForecastPlan" />
+    <EntitySetMapping Name="ConceptFilters">
+      <EntityTypeMapping TypeName="DisneyHCMLatamPlanningDevModel.ConceptFilter">
+        <MappingFragment StoreEntitySet="ConceptFilters">
+          <ScalarProperty Name="Connector" ColumnName="Connector" />
+          <ScalarProperty Name="Sequence" ColumnName="Sequence" />
+          <ScalarProperty Name="FilterId" ColumnName="FilterId" />
+          <ScalarProperty Name="ConceptId" ColumnName="ConceptId" />
+          <ScalarProperty Name="ConceptFilterId" ColumnName="ConceptFilterId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Filters">
+      <EntityTypeMapping TypeName="DisneyHCMLatamPlanningDevModel.Filter">
+        <MappingFragment StoreEntitySet="Filters">
+          <ScalarProperty Name="Operation" ColumnName="Operation" />
+          <ScalarProperty Name="Parameter2Id" ColumnName="Parameter2Id" />
+          <ScalarProperty Name="Parameter1Id" ColumnName="Parameter1Id" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+          <ScalarProperty Name="FilterTypeId" ColumnName="FilterTypeId" />
+          <ScalarProperty Name="Title" ColumnName="Title" />
+          <ScalarProperty Name="FilterId" ColumnName="FilterId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="FilterTypes">
+      <EntityTypeMapping TypeName="DisneyHCMLatamPlanningDevModel.FilterType">
+        <MappingFragment StoreEntitySet="FilterTypes">
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="FilterTypeId" ColumnName="FilterTypeId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="GLAccounts">
+      <EntityTypeMapping TypeName="DisneyHCMLatamPlanningDevModel.GLAccount">
+        <MappingFragment StoreEntitySet="GLAccounts">
+          <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+          <ScalarProperty Name="Title" ColumnName="Title" />
+          <ScalarProperty Name="SAPCode" ColumnName="SAPCode" />
+          <ScalarProperty Name="GLAccountId" ColumnName="GLAccountId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="HCTypes">
+      <EntityTypeMapping TypeName="DisneyHCMLatamPlanningDevModel.HCType">
+        <MappingFragment StoreEntitySet="HCTypes">
+          <ScalarProperty Name="ADMWAccountType" ColumnName="ADMWAccountType" />
+          <ScalarProperty Name="ADMWAccountID" ColumnName="ADMWAccountID" />
+          <ScalarProperty Name="IsAdjust" ColumnName="IsAdjust" />
+          <ScalarProperty Name="IsTemporal" ColumnName="IsTemporal" />
+          <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+          <ScalarProperty Name="Code" ColumnName="Code" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+          <ScalarProperty Name="HCTypeID" ColumnName="HCTypeID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ParameterTypes">
+      <EntityTypeMapping TypeName="DisneyHCMLatamPlanningDevModel.ParameterType">
+        <MappingFragment StoreEntitySet="ParameterTypes">
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="ParameterTypeId" ColumnName="ParameterTypeId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="SBForecastPlanPositions">
+      <EntityTypeMapping TypeName="DisneyHCMLatamPlanningDevModel.SBForecastPlanPosition">
+        <MappingFragment StoreEntitySet="SBForecastPlanPositions">
+          <ScalarProperty Name="EmployeeLogId" ColumnName="EmployeeLogId" />
+          <ScalarProperty Name="HCPositionLogId" ColumnName="HCPositionLogId" />
+          <ScalarProperty Name="SBForecastPlanId" ColumnName="SBForecastPlanId" />
+          <ScalarProperty Name="SBForecastPlanPositionId" ColumnName="SBForecastPlanPositionId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="SBForecastPlanStatuses">
+      <EntityTypeMapping TypeName="DisneyHCMLatamPlanningDevModel.SBForecastPlanStatus">
+        <MappingFragment StoreEntitySet="SBForecastPlanStatuses">
+          <ScalarProperty Name="Description" ColumnName="Description" />
+          <ScalarProperty Name="SBForecastPlanStatusID" ColumnName="SBForecastPlanStatusID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Schemes">
+      <EntityTypeMapping TypeName="DisneyHCMLatamPlanningDevModel.Scheme">
+        <MappingFragment StoreEntitySet="Schemes">
+          <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+          <ScalarProperty Name="ModificationDate" ColumnName="ModificationDate" />
+          <ScalarProperty Name="CreationDate" ColumnName="CreationDate" />
+          <ScalarProperty Name="ModifiedUserName" ColumnName="ModifiedUserName" />
+          <ScalarProperty Name="UserName" ColumnName="UserName" />
+          <ScalarProperty Name="CompanyId" ColumnName="CompanyId" />
+          <ScalarProperty Name="HCTypeId" ColumnName="HCTypeId" />
+          <ScalarProperty Name="SchemeId" ColumnName="SchemeId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="HCPositions">
+      <EntityTypeMapping TypeName="DisneyHCMLatamPlanningDevModel.HCPosition">
+        <MappingFragment StoreEntitySet="HCPositions">
+          <ScalarProperty Name="CommisionsElegible" ColumnName="CommisionsElegible" />
+          <ScalarProperty Name="PersonalSubAreaId" ColumnName="PersonalSubAreaId" />
+          <ScalarProperty Name="BonusPlanId" ColumnName="BonusPlanId" />
+          <ScalarProperty Name="AnnualSalary" ColumnName="AnnualSalary" />
+          <ScalarProperty Name="SAPPositionNumber" ColumnName="SAPPositionNumber" />
+          <ScalarProperty Name="IsNew" ColumnName="IsNew" />
+          <ScalarProperty Name="IsConversion" ColumnName="IsConversion" />
+          <ScalarProperty Name="UserName" ColumnName="UserName" />
+          <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
+          <ScalarProperty Name="HCStatusID" ColumnName="HCStatusID" />
+          <ScalarProperty Name="CostCenterPrimaryID" ColumnName="CostCenterPrimaryID" />
+          <ScalarProperty Name="HCTypeID" ColumnName="HCTypeID" />
+          <ScalarProperty Name="FiscalTimeEndDateID" ColumnName="FiscalTimeEndDateID" />
+          <ScalarProperty Name="FiscalTimeStartDateID" ColumnName="FiscalTimeStartDateID" />
+          <ScalarProperty Name="LaborGradeID" ColumnName="LaborGradeID" />
+          <ScalarProperty Name="IHCPositionID" ColumnName="IHCPositionID" />
+          <ScalarProperty Name="HCParentID" ColumnName="HCParentID" />
+          <ScalarProperty Name="CompanyID" ColumnName="CompanyID" />
+          <ScalarProperty Name="TerritoryID" ColumnName="TerritoryID" />
+          <ScalarProperty Name="LobID" ColumnName="LobID" />
+          <ScalarProperty Name="PlanScheduleID" ColumnName="PlanScheduleID" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+          <ScalarProperty Name="OriginType" ColumnName="OriginType" />
+          <ScalarProperty Name="HCPositionID" ColumnName="HCPositionID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Companies">
+      <EntityTypeMapping TypeName="DisneyHCMLatamPlanningDevModel.Company">
+        <MappingFragment StoreEntitySet="Companies">
+          <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+          <ScalarProperty Name="TerritoryID" ColumnName="TerritoryID" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+          <ScalarProperty Name="Code" ColumnName="Code" />
+          <ScalarProperty Name="CompanyID" ColumnName="CompanyID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ParameterDataTypes">
+      <EntityTypeMapping TypeName="DisneyHCMLatamPlanningDevModel.ParameterDataType">
+        <MappingFragment StoreEntitySet="ParameterDataTypes">
+          <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="ParameterDataTypeID" ColumnName="ParameterDataTypeID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Parameters">
+      <EntityTypeMapping TypeName="DisneyHCMLatamPlanningDevModel.Parameter">
+        <MappingFragment StoreEntitySet="Parameters">
+          <ScalarProperty Name="FixedValue" ColumnName="FixedValue" />
+          <ScalarProperty Name="ColumnName" ColumnName="ColumnName" />
+          <ScalarProperty Name="TableName" ColumnName="TableName" />
+          <ScalarProperty Name="IsModifiable" ColumnName="IsModifiable" />
+          <ScalarProperty Name="IsConstant" ColumnName="IsConstant" />
+          <ScalarProperty Name="IsAccumulator" ColumnName="IsAccumulator" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="CompanyId" ColumnName="CompanyId" />
+          <ScalarProperty Name="ParameterDataTypeID" ColumnName="ParameterDataTypeID" />
+          <ScalarProperty Name="ParameterTypeId" ColumnName="ParameterTypeId" />
+          <ScalarProperty Name="ParameterId" ColumnName="ParameterId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="FiscalYears">
+      <EntityTypeMapping TypeName="DisneyHCMLatamPlanningDevModel.FiscalYear">
+        <MappingFragment StoreEntitySet="FiscalYears">
+          <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+          <ScalarProperty Name="IsCurrent" ColumnName="IsCurrent" />
+          <ScalarProperty Name="EndDate" ColumnName="EndDate" />
+          <ScalarProperty Name="BeginDate" ColumnName="BeginDate" />
+          <ScalarProperty Name="Code" ColumnName="Code" />
+          <ScalarProperty Name="FiscalYearID" ColumnName="FiscalYearID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="SBForecastPlans">
+      <EntityTypeMapping TypeName="DisneyHCMLatamPlanningDevModel.SBForecastPlan">
+        <MappingFragment StoreEntitySet="SBForecastPlans">
+          <ScalarProperty Name="UploadedFileName" ColumnName="UploadedFileName" />
+          <ScalarProperty Name="SBForecastPlanStatusId" ColumnName="SBForecastPlanStatusId" />
+          <ScalarProperty Name="UserName" ColumnName="UserName" />
+          <ScalarProperty Name="ExecutionDate" ColumnName="ExecutionDate" />
+          <ScalarProperty Name="CreationDate" ColumnName="CreationDate" />
+          <ScalarProperty Name="MonthTo" ColumnName="MonthTo" />
+          <ScalarProperty Name="MonthFrom" ColumnName="MonthFrom" />
+          <ScalarProperty Name="FiscalYearId" ColumnName="FiscalYearId" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="SBForecastPlanId" ColumnName="SBForecastPlanId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="SBForecastPlanDatas">
+      <EntityTypeMapping TypeName="DisneyHCMLatamPlanningDevModel.SBForecastPlanData">
+        <MappingFragment StoreEntitySet="SBForecastPlanData">
+          <ScalarProperty Name="Value" ColumnName="Value" />
+          <ScalarProperty Name="Month" ColumnName="Month" />
+          <ScalarProperty Name="ParameterDataTypeID" ColumnName="ParameterDataTypeID" />
+          <ScalarProperty Name="SBForecastPlanPositionId" ColumnName="SBForecastPlanPositionId" />
+          <ScalarProperty Name="SBForecastPlanDataID" ColumnName="SBForecastPlanDataID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ParameterMonthValues">
+      <EntityTypeMapping TypeName="DisneyHCMLatamPlanningDevModel.ParameterMonthValue">
+        <MappingFragment StoreEntitySet="ParameterMonthValues">
+          <ScalarProperty Name="Value" ColumnName="Value" />
+          <ScalarProperty Name="Month" ColumnName="Month" />
+          <ScalarProperty Name="ParameterValueId" ColumnName="ParameterValueId" />
+          <ScalarProperty Name="ParameterMonthValueId" ColumnName="ParameterMonthValueId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ParameterValues">
+      <EntityTypeMapping TypeName="DisneyHCMLatamPlanningDevModel.ParameterValue">
+        <MappingFragment StoreEntitySet="ParameterValues">
+          <ScalarProperty Name="FiscalYearID" ColumnName="FiscalYearID" />
+          <ScalarProperty Name="ParameterId" ColumnName="ParameterId" />
+          <ScalarProperty Name="ParameterValuesId" ColumnName="ParameterValuesId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ResultParameterMonthValues">
+      <EntityTypeMapping TypeName="DisneyHCMLatamPlanningDevModel.ResultParameterMonthValue">
+        <MappingFragment StoreEntitySet="ResultParameterMonthValues">
+          <ScalarProperty Name="Value" ColumnName="Value" />
+          <ScalarProperty Name="Month" ColumnName="Month" />
+          <ScalarProperty Name="ResultParameterId" ColumnName="ResultParameterId" />
+          <ScalarProperty Name="ResultParameterMonthValueId" ColumnName="ResultParameterMonthValueId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ResultParameters">
+      <EntityTypeMapping TypeName="DisneyHCMLatamPlanningDevModel.ResultParameter">
+        <MappingFragment StoreEntitySet="ResultParameters">
+          <ScalarProperty Name="ParameterId" ColumnName="ParameterId" />
+          <ScalarProperty Name="ConceptResultId" ColumnName="ConceptResultId" />
+          <ScalarProperty Name="ResultParameterId" ColumnName="ResultParameterId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="SBForecastPlanModifiedGlobals">
+      <EntityTypeMapping TypeName="DisneyHCMLatamPlanningDevModel.SBForecastPlanModifiedGlobal">
+        <MappingFragment StoreEntitySet="SBForecastPlanModifiedGlobals">
+          <ScalarProperty Name="ParameterId" ColumnName="ParameterId" />
+          <ScalarProperty Name="SBForecastPlanId" ColumnName="SBForecastPlanId" />
+          <ScalarProperty Name="SBForecastPlanModifiedGlobalId" ColumnName="SBForecastPlanModifiedGlobalId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Concepts">
+      <EntityTypeMapping TypeName="DisneyHCMLatamPlanningDevModel.Concept">
+        <MappingFragment StoreEntitySet="Concepts">
+          <ScalarProperty Name="OutputParameter2Id" ColumnName="OutputParameter2Id" />
+          <ScalarProperty Name="OutputParameter1Id" ColumnName="OutputParameter1Id" />
+          <ScalarProperty Name="Operation" ColumnName="Operation" />
+          <ScalarProperty Name="Parameter4Id" ColumnName="Parameter4Id" />
+          <ScalarProperty Name="Parameter3Id" ColumnName="Parameter3Id" />
+          <ScalarProperty Name="Parameter2Id" ColumnName="Parameter2Id" />
+          <ScalarProperty Name="Parameter1Id" ColumnName="Parameter1Id" />
+          <ScalarProperty Name="GLAccountID" ColumnName="GLAccountID" />
+          <ScalarProperty Name="Sequence" ColumnName="Sequence" />
+          <ScalarProperty Name="ExpenseTypeId" ColumnName="ExpenseTypeId" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+          <ScalarProperty Name="Title" ColumnName="Title" />
+          <ScalarProperty Name="SchemaId" ColumnName="SchemaId" />
+          <ScalarProperty Name="ConceptId" ColumnName="ConceptId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="SBForecastPlanLogs">
+      <EntityTypeMapping TypeName="DisneyHCMLatamPlanningDevModel.SBForecastPlanLog">
+        <MappingFragment StoreEntitySet="SBForecastPlanLogs">
+          <ScalarProperty Name="Message" ColumnName="Message" />
+          <ScalarProperty Name="TypeId" ColumnName="TypeId" />
+          <ScalarProperty Name="Date" ColumnName="Date" />
+          <ScalarProperty Name="SBForecastPlanId" ColumnName="SBForecastPlanId" />
+          <ScalarProperty Name="SBForecastPlanLogId" ColumnName="SBForecastPlanLogId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ExpenseTypes">
+      <EntityTypeMapping TypeName="DisneyHCMLatamPlanningDevModel.ExpenseType">
+        <MappingFragment StoreEntitySet="ExpenseTypes">
+          <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+          <ScalarProperty Name="Code" ColumnName="Code" />
+          <ScalarProperty Name="ExpenseGroupId" ColumnName="ExpenseGroupId" />
+          <ScalarProperty Name="ExpenseTypeId" ColumnName="ExpenseTypeId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ExpenseGroups">
+      <EntityTypeMapping TypeName="DisneyHCMLatamPlanningDevModel.ExpenseGroup">
+        <MappingFragment StoreEntitySet="ExpenseGroups">
+          <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+          <ScalarProperty Name="Code" ColumnName="Code" />
+          <ScalarProperty Name="ExpenseGroupId" ColumnName="ExpenseGroupId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ConceptsValidMonths">
+      <EntityTypeMapping TypeName="IsTypeOf(DisneyHCMLatamPlanningDevModel.ConceptsValidMonth)">
+        <MappingFragment StoreEntitySet="ConceptsValidMonths">
+          <ScalarProperty Name="MonthId" ColumnName="MonthId" />
+          <ScalarProperty Name="ConceptId" ColumnName="ConceptId" />
+          <ScalarProperty Name="ConceptValidMonthId" ColumnName="ConceptValidMonthId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="HCPositionLogs">
+      <EntityTypeMapping TypeName="DisneyHCMLatamPlanningDevModel.HCPositionLog">
+        <MappingFragment StoreEntitySet="HCPositionLogs">
+          <ScalarProperty Name="PersonalSubAreaId" ColumnName="PersonalSubAreaId" />
+          <ScalarProperty Name="BonusPlanId" ColumnName="BonusPlanId" />
+          <ScalarProperty Name="CommisionsElegible" ColumnName="CommisionsElegible" />
+          <ScalarProperty Name="AnnualSalary" ColumnName="AnnualSalary" />
+          <ScalarProperty Name="HCRequestID" ColumnName="HCRequestID" />
+          <ScalarProperty Name="IsNew" ColumnName="IsNew" />
+          <ScalarProperty Name="IsConversion" ColumnName="IsConversion" />
+          <ScalarProperty Name="UserName" ColumnName="UserName" />
+          <ScalarProperty Name="HCStatusID" ColumnName="HCStatusID" />
+          <ScalarProperty Name="CostCenterPrimaryID" ColumnName="CostCenterPrimaryID" />
+          <ScalarProperty Name="HCTypeID" ColumnName="HCTypeID" />
+          <ScalarProperty Name="FiscalTimeEndDateID" ColumnName="FiscalTimeEndDateID" />
+          <ScalarProperty Name="FiscalTimeStartDateID" ColumnName="FiscalTimeStartDateID" />
+          <ScalarProperty Name="LaborGradeID" ColumnName="LaborGradeID" />
+          <ScalarProperty Name="IHCPositionID" ColumnName="IHCPositionID" />
+          <ScalarProperty Name="EmployeeID" ColumnName="EmployeeID" />
+          <ScalarProperty Name="HCParentID" ColumnName="HCParentID" />
+          <ScalarProperty Name="CompanyID" ColumnName="CompanyID" />
+          <ScalarProperty Name="TerritoryID" ColumnName="TerritoryID" />
+          <ScalarProperty Name="LobID" ColumnName="LobID" />
+          <ScalarProperty Name="PlanScheduleID" ColumnName="PlanScheduleID" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+          <ScalarProperty Name="OriginType" ColumnName="OriginType" />
+          <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
+          <ScalarProperty Name="HCPositionID" ColumnName="HCPositionID" />
+          <ScalarProperty Name="HCPositionLogID" ColumnName="HCPositionLogID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ModifiedGlobalsMonthValues">
+      <EntityTypeMapping TypeName="DisneyHCMLatamPlanningDevModel.ModifiedGlobalsMonthValue">
+        <MappingFragment StoreEntitySet="ModifiedGlobalsMonthValues">
+          <ScalarProperty Name="Value" ColumnName="Value" />
+          <ScalarProperty Name="Month" ColumnName="Month" />
+          <ScalarProperty Name="SBForecastPlanModifiedGlobalId" ColumnName="SBForecastPlanModifiedGlobalId" />
+          <ScalarProperty Name="ModifiedGlobalsMonthValuesId" ColumnName="ModifiedGlobalsMonthValuesId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="SBForecastPlanAdjustments">
+      <EntityTypeMapping TypeName="DisneyHCMLatamPlanningDevModel.SBForecastPlanAdjustment">
+        <MappingFragment StoreEntitySet="SBForecastPlanAdjustments">
+          <ScalarProperty Name="CalendarMonthId" ColumnName="CalendarMonthId" />
+          <ScalarProperty Name="Value" ColumnName="Value" />
+          <ScalarProperty Name="ExpenseTypeId" ColumnName="ExpenseTypeId" />
+          <ScalarProperty Name="GLAccountID" ColumnName="GLAccountID" />
+          <ScalarProperty Name="HCTypeId" ColumnName="HCTypeId" />
+          <ScalarProperty Name="LobId" ColumnName="LobId" />
+          <ScalarProperty Name="CostCenterId" ColumnName="CostCenterId" />
+          <ScalarProperty Name="CompanyId" ColumnName="CompanyId" />
+          <ScalarProperty Name="Title" ColumnName="Title" />
+          <ScalarProperty Name="SBForecastPlanId" ColumnName="SBForecastPlanId" />
+          <ScalarProperty Name="SBForecastPlanAdjustmentId" ColumnName="SBForecastPlanAdjustmentId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="CostCenters">
+      <EntityTypeMapping TypeName="DisneyHCMLatamPlanningDevModel.CostCenter">
+        <MappingFragment StoreEntitySet="CostCenters">
+          <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+          <ScalarProperty Name="CompanyID" ColumnName="CompanyID" />
+          <ScalarProperty Name="DepartmentID" ColumnName="DepartmentID" />
+          <ScalarProperty Name="CostCenterGroupID" ColumnName="CostCenterGroupID" />
+          <ScalarProperty Name="Code" ColumnName="Code" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+          <ScalarProperty Name="CostCenterID" ColumnName="CostCenterID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="EmployeeLogs">
+      <EntityTypeMapping TypeName="DisneyHCMLatamPlanningDevModel.EmployeeLog">
+        <MappingFragment StoreEntitySet="EmployeeLogs">
+          <ScalarProperty Name="YearsOfWork" ColumnName="YearsOfWork" />
+          <ScalarProperty Name="DaysOfWork" ColumnName="DaysOfWork" />
+          <ScalarProperty Name="Location" ColumnName="Location" />
+          <ScalarProperty Name="UserName" ColumnName="UserName" />
+          <ScalarProperty Name="StatusDescription" ColumnName="StatusDescription" />
+          <ScalarProperty Name="Status" ColumnName="Status" />
+          <ScalarProperty Name="PhotoID" ColumnName="PhotoID" />
+          <ScalarProperty Name="SAPUser" ColumnName="SAPUser" />
+          <ScalarProperty Name="Nationality" ColumnName="Nationality" />
+          <ScalarProperty Name="DateOfBirth" ColumnName="DateOfBirth" />
+          <ScalarProperty Name="TaxNumber" ColumnName="TaxNumber" />
+          <ScalarProperty Name="MobilePhone" ColumnName="MobilePhone" />
+          <ScalarProperty Name="HomePhone" ColumnName="HomePhone" />
+          <ScalarProperty Name="BusinessPhone" ColumnName="BusinessPhone" />
+          <ScalarProperty Name="EMail" ColumnName="EMail" />
+          <ScalarProperty Name="LastWorkingDate" ColumnName="LastWorkingDate" />
+          <ScalarProperty Name="EffectiveDate" ColumnName="EffectiveDate" />
+          <ScalarProperty Name="HCPositionID" ColumnName="HCPositionID" />
+          <ScalarProperty Name="IdentificationNumber" ColumnName="IdentificationNumber" />
+          <ScalarProperty Name="DepartmentID" ColumnName="DepartmentID" />
+          <ScalarProperty Name="FullName" ColumnName="FullName" />
+          <ScalarProperty Name="ShortName" ColumnName="ShortName" />
+          <ScalarProperty Name="LastName" ColumnName="LastName" />
+          <ScalarProperty Name="MiddleName" ColumnName="MiddleName" />
+          <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+          <ScalarProperty Name="EmployeeID" ColumnName="EmployeeID" />
+          <ScalarProperty Name="EmployeeLogID" ColumnName="EmployeeLogID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Employees">
+      <EntityTypeMapping TypeName="DisneyHCMLatamPlanningDevModel.Employee">
+        <MappingFragment StoreEntitySet="Employees">
+          <ScalarProperty Name="YearsOfWork" ColumnName="YearsOfWork" />
+          <ScalarProperty Name="DaysOfWork" ColumnName="DaysOfWork" />
+          <ScalarProperty Name="Location" ColumnName="Location" />
+          <ScalarProperty Name="UserName" ColumnName="UserName" />
+          <ScalarProperty Name="StatusDescription" ColumnName="StatusDescription" />
+          <ScalarProperty Name="Status" ColumnName="Status" />
+          <ScalarProperty Name="PhotoID" ColumnName="PhotoID" />
+          <ScalarProperty Name="SAPUser" ColumnName="SAPUser" />
+          <ScalarProperty Name="Nationality" ColumnName="Nationality" />
+          <ScalarProperty Name="DateOfBirth" ColumnName="DateOfBirth" />
+          <ScalarProperty Name="TaxNumber" ColumnName="TaxNumber" />
+          <ScalarProperty Name="MobilePhone" ColumnName="MobilePhone" />
+          <ScalarProperty Name="HomePhone" ColumnName="HomePhone" />
+          <ScalarProperty Name="BusinessPhone" ColumnName="BusinessPhone" />
+          <ScalarProperty Name="EMail" ColumnName="EMail" />
+          <ScalarProperty Name="LastWorkingDate" ColumnName="LastWorkingDate" />
+          <ScalarProperty Name="EffectiveDate" ColumnName="EffectiveDate" />
+          <ScalarProperty Name="HCPositionID" ColumnName="HCPositionID" />
+          <ScalarProperty Name="IdentificationNumber" ColumnName="IdentificationNumber" />
+          <ScalarProperty Name="DepartmentID" ColumnName="DepartmentID" />
+          <ScalarProperty Name="FullName" ColumnName="FullName" />
+          <ScalarProperty Name="ShortName" ColumnName="ShortName" />
+          <ScalarProperty Name="LastName" ColumnName="LastName" />
+          <ScalarProperty Name="MiddleName" ColumnName="MiddleName" />
+          <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+          <ScalarProperty Name="EmployeeID" ColumnName="EmployeeID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Lobs">
+      <EntityTypeMapping TypeName="DisneyHCMLatamPlanningDevModel.Lob">
+        <MappingFragment StoreEntitySet="Lobs">
+          <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+          <ScalarProperty Name="LobID" ColumnName="LobID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ConceptResults">
+      <EntityTypeMapping TypeName="DisneyHCMLatamPlanningDevModel.ConceptResult">
+        <MappingFragment StoreEntitySet="ConceptResults">
+          <ScalarProperty Name="Value" ColumnName="Value" />
+          <ScalarProperty Name="CalendarMonthId" ColumnName="CalendarMonthId" />
+          <ScalarProperty Name="ConceptId" ColumnName="ConceptId" />
+          <ScalarProperty Name="SBForecastPlanPositionId" ColumnName="SBForecastPlanPositionId" />
+          <ScalarProperty Name="ConceptResultId" ColumnName="ConceptResultId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>

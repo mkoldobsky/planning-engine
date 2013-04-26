@@ -1,0 +1,10 @@
+C:\Projects\hcmsbplanning\spikes\RuleEngine\Engine\FromDisney\bin\Debug\FromDisney.dll
+C:\Projects\hcmsbplanning\spikes\RuleEngine\Engine\FromDisney\bin\Debug\FromDisney.pdb
+C:\Projects\hcmsbplanning\spikes\RuleEngine\Engine\FromDisney\obj\Debug\ResolveAssemblyReference.cache
+C:\Projects\hcmsbplanning\spikes\RuleEngine\Engine\FromDisney\obj\Debug\FromDisney.dll
+C:\Projects\hcmsbplanning\spikes\RuleEngine\Engine\FromDisney\obj\Debug\FromDisney.pdb
+C:\Projects\hcmsbplanning\trunk\FromDisney\bin\Debug\FromDisney.dll
+C:\Projects\hcmsbplanning\trunk\FromDisney\bin\Debug\FromDisney.pdb
+C:\Projects\hcmsbplanning\trunk\FromDisney\obj\Debug\ResolveAssemblyReference.cache
+C:\Projects\hcmsbplanning\trunk\FromDisney\obj\Debug\FromDisney.dll
+C:\Projects\hcmsbplanning\trunk\FromDisney\obj\Debug\FromDisney.pdb

@@ -1,0 +1,1477 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="DisneyHCMLatamPlanningDevModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/02/edm/ssdl">
+  <EntityContainer Name="DisneyHCMLatamPlanningDevModelStoreContainer">
+    <EntitySet Name="Companies" EntityType="DisneyHCMLatamPlanningDevModel.Store.Companies" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="ConceptFilters" EntityType="DisneyHCMLatamPlanningDevModel.Store.ConceptFilters" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="ConceptResults" EntityType="DisneyHCMLatamPlanningDevModel.Store.ConceptResults" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Concepts" EntityType="DisneyHCMLatamPlanningDevModel.Store.Concepts" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="ConceptsValidMonths" EntityType="DisneyHCMLatamPlanningDevModel.Store.ConceptsValidMonths" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="CostCenters" EntityType="DisneyHCMLatamPlanningDevModel.Store.CostCenters" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="EmployeeLogs" EntityType="DisneyHCMLatamPlanningDevModel.Store.EmployeeLogs" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Employees" EntityType="DisneyHCMLatamPlanningDevModel.Store.Employees" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="ExpenseGroups" EntityType="DisneyHCMLatamPlanningDevModel.Store.ExpenseGroups" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="ExpenseTypes" EntityType="DisneyHCMLatamPlanningDevModel.Store.ExpenseTypes" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Filters" EntityType="DisneyHCMLatamPlanningDevModel.Store.Filters" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="FilterTypes" EntityType="DisneyHCMLatamPlanningDevModel.Store.FilterTypes" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="FiscalYears" EntityType="DisneyHCMLatamPlanningDevModel.Store.FiscalYears" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="GLAccounts" EntityType="DisneyHCMLatamPlanningDevModel.Store.GLAccounts" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="HCPositionLogs" EntityType="DisneyHCMLatamPlanningDevModel.Store.HCPositionLogs" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="HCPositions" EntityType="DisneyHCMLatamPlanningDevModel.Store.HCPositions" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="HCTypes" EntityType="DisneyHCMLatamPlanningDevModel.Store.HCTypes" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Lobs" EntityType="DisneyHCMLatamPlanningDevModel.Store.Lobs" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="ModifiedGlobalsMonthValues" EntityType="DisneyHCMLatamPlanningDevModel.Store.ModifiedGlobalsMonthValues" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="ParameterDataTypes" EntityType="DisneyHCMLatamPlanningDevModel.Store.ParameterDataTypes" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="ParameterMonthValues" EntityType="DisneyHCMLatamPlanningDevModel.Store.ParameterMonthValues" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Parameters" EntityType="DisneyHCMLatamPlanningDevModel.Store.Parameters" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="ParameterTypes" EntityType="DisneyHCMLatamPlanningDevModel.Store.ParameterTypes" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="ParameterValues" EntityType="DisneyHCMLatamPlanningDevModel.Store.ParameterValues" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="ResultParameterMonthValues" EntityType="DisneyHCMLatamPlanningDevModel.Store.ResultParameterMonthValues" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="ResultParameters" EntityType="DisneyHCMLatamPlanningDevModel.Store.ResultParameters" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="SBForecastPlanAdjustments" EntityType="DisneyHCMLatamPlanningDevModel.Store.SBForecastPlanAdjustments" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="SBForecastPlanData" EntityType="DisneyHCMLatamPlanningDevModel.Store.SBForecastPlanData" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="SBForecastPlanLogs" EntityType="DisneyHCMLatamPlanningDevModel.Store.SBForecastPlanLogs" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="SBForecastPlanModifiedGlobals" EntityType="DisneyHCMLatamPlanningDevModel.Store.SBForecastPlanModifiedGlobals" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="SBForecastPlanPositions" EntityType="DisneyHCMLatamPlanningDevModel.Store.SBForecastPlanPositions" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="SBForecastPlans" EntityType="DisneyHCMLatamPlanningDevModel.Store.SBForecastPlans" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="SBForecastPlanStatuses" EntityType="DisneyHCMLatamPlanningDevModel.Store.SBForecastPlanStatuses" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Schemes" EntityType="DisneyHCMLatamPlanningDevModel.Store.Schemes" store:Type="Tables" Schema="dbo" />
+    <AssociationSet Name="FK_ConceptFilters_Concepts" Association="DisneyHCMLatamPlanningDevModel.Store.FK_ConceptFilters_Concepts">
+      <End Role="Concepts" EntitySet="Concepts" />
+      <End Role="ConceptFilters" EntitySet="ConceptFilters" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ConceptFilters_filters" Association="DisneyHCMLatamPlanningDevModel.Store.FK_ConceptFilters_filters">
+      <End Role="Filters" EntitySet="Filters" />
+      <End Role="ConceptFilters" EntitySet="ConceptFilters" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ConceptResults_Concepts" Association="DisneyHCMLatamPlanningDevModel.Store.FK_ConceptResults_Concepts">
+      <End Role="Concepts" EntitySet="Concepts" />
+      <End Role="ConceptResults" EntitySet="ConceptResults" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ConceptResults_SBForecastPlanPositions" Association="DisneyHCMLatamPlanningDevModel.Store.FK_ConceptResults_SBForecastPlanPositions">
+      <End Role="SBForecastPlanPositions" EntitySet="SBForecastPlanPositions" />
+      <End Role="ConceptResults" EntitySet="ConceptResults" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Concepts_ExpenseTypes" Association="DisneyHCMLatamPlanningDevModel.Store.FK_Concepts_ExpenseTypes">
+      <End Role="ExpenseTypes" EntitySet="ExpenseTypes" />
+      <End Role="Concepts" EntitySet="Concepts" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Concepts_GLAccounts" Association="DisneyHCMLatamPlanningDevModel.Store.FK_Concepts_GLAccounts">
+      <End Role="GLAccounts" EntitySet="GLAccounts" />
+      <End Role="Concepts" EntitySet="Concepts" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Concepts_OutputParameter1" Association="DisneyHCMLatamPlanningDevModel.Store.FK_Concepts_OutputParameter1">
+      <End Role="Parameters" EntitySet="Parameters" />
+      <End Role="Concepts" EntitySet="Concepts" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Concepts_OutputParameter2" Association="DisneyHCMLatamPlanningDevModel.Store.FK_Concepts_OutputParameter2">
+      <End Role="Parameters" EntitySet="Parameters" />
+      <End Role="Concepts" EntitySet="Concepts" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Concepts_Parameters1" Association="DisneyHCMLatamPlanningDevModel.Store.FK_Concepts_Parameters1">
+      <End Role="Parameters" EntitySet="Parameters" />
+      <End Role="Concepts" EntitySet="Concepts" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Concepts_Parameters2" Association="DisneyHCMLatamPlanningDevModel.Store.FK_Concepts_Parameters2">
+      <End Role="Parameters" EntitySet="Parameters" />
+      <End Role="Concepts" EntitySet="Concepts" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Concepts_Parameters3" Association="DisneyHCMLatamPlanningDevModel.Store.FK_Concepts_Parameters3">
+      <End Role="Parameters" EntitySet="Parameters" />
+      <End Role="Concepts" EntitySet="Concepts" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Concepts_Parameters4" Association="DisneyHCMLatamPlanningDevModel.Store.FK_Concepts_Parameters4">
+      <End Role="Parameters" EntitySet="Parameters" />
+      <End Role="Concepts" EntitySet="Concepts" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Concepts_Schemes" Association="DisneyHCMLatamPlanningDevModel.Store.FK_Concepts_Schemes">
+      <End Role="Schemes" EntitySet="Schemes" />
+      <End Role="Concepts" EntitySet="Concepts" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ConceptsValidMonths_Concepts" Association="DisneyHCMLatamPlanningDevModel.Store.FK_ConceptsValidMonths_Concepts">
+      <End Role="Concepts" EntitySet="Concepts" />
+      <End Role="ConceptsValidMonths" EntitySet="ConceptsValidMonths" />
+    </AssociationSet>
+    <AssociationSet Name="FK_CostCenters_Companies" Association="DisneyHCMLatamPlanningDevModel.Store.FK_CostCenters_Companies">
+      <End Role="Companies" EntitySet="Companies" />
+      <End Role="CostCenters" EntitySet="CostCenters" />
+    </AssociationSet>
+    <AssociationSet Name="FK_EmployeeLogs_Employees" Association="DisneyHCMLatamPlanningDevModel.Store.FK_EmployeeLogs_Employees">
+      <End Role="Employees" EntitySet="Employees" />
+      <End Role="EmployeeLogs" EntitySet="EmployeeLogs" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Employees_HCPositions" Association="DisneyHCMLatamPlanningDevModel.Store.FK_Employees_HCPositions">
+      <End Role="HCPositions" EntitySet="HCPositions" />
+      <End Role="Employees" EntitySet="Employees" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ExpenseTypes_ExpenseGroups" Association="DisneyHCMLatamPlanningDevModel.Store.FK_ExpenseTypes_ExpenseGroups">
+      <End Role="ExpenseGroups" EntitySet="ExpenseGroups" />
+      <End Role="ExpenseTypes" EntitySet="ExpenseTypes" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Filters_FilterTypes" Association="DisneyHCMLatamPlanningDevModel.Store.FK_Filters_FilterTypes">
+      <End Role="FilterTypes" EntitySet="FilterTypes" />
+      <End Role="Filters" EntitySet="Filters" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Filters_Parameters" Association="DisneyHCMLatamPlanningDevModel.Store.FK_Filters_Parameters">
+      <End Role="Parameters" EntitySet="Parameters" />
+      <End Role="Filters" EntitySet="Filters" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Filters_Parameters1" Association="DisneyHCMLatamPlanningDevModel.Store.FK_Filters_Parameters1">
+      <End Role="Parameters" EntitySet="Parameters" />
+      <End Role="Filters" EntitySet="Filters" />
+    </AssociationSet>
+    <AssociationSet Name="FK_HCPositionLogs_Companies" Association="DisneyHCMLatamPlanningDevModel.Store.FK_HCPositionLogs_Companies">
+      <End Role="Companies" EntitySet="Companies" />
+      <End Role="HCPositionLogs" EntitySet="HCPositionLogs" />
+    </AssociationSet>
+    <AssociationSet Name="FK_HCPositionLogs_CostCenters" Association="DisneyHCMLatamPlanningDevModel.Store.FK_HCPositionLogs_CostCenters">
+      <End Role="CostCenters" EntitySet="CostCenters" />
+      <End Role="HCPositionLogs" EntitySet="HCPositionLogs" />
+    </AssociationSet>
+    <AssociationSet Name="FK_HCPositionLogs_Employees" Association="DisneyHCMLatamPlanningDevModel.Store.FK_HCPositionLogs_Employees">
+      <End Role="Employees" EntitySet="Employees" />
+      <End Role="HCPositionLogs" EntitySet="HCPositionLogs" />
+    </AssociationSet>
+    <AssociationSet Name="FK_HCPositionLogs_HCPositions" Association="DisneyHCMLatamPlanningDevModel.Store.FK_HCPositionLogs_HCPositions">
+      <End Role="HCPositions" EntitySet="HCPositions" />
+      <End Role="HCPositionLogs" EntitySet="HCPositionLogs" />
+    </AssociationSet>
+    <AssociationSet Name="FK_HCPositionLogs_HCPositions1" Association="DisneyHCMLatamPlanningDevModel.Store.FK_HCPositionLogs_HCPositions1">
+      <End Role="HCPositions" EntitySet="HCPositions" />
+      <End Role="HCPositionLogs" EntitySet="HCPositionLogs" />
+    </AssociationSet>
+    <AssociationSet Name="FK_HCPositionLogs_HCTypes" Association="DisneyHCMLatamPlanningDevModel.Store.FK_HCPositionLogs_HCTypes">
+      <End Role="HCTypes" EntitySet="HCTypes" />
+      <End Role="HCPositionLogs" EntitySet="HCPositionLogs" />
+    </AssociationSet>
+    <AssociationSet Name="FK_HCPositionLogs_Lobs" Association="DisneyHCMLatamPlanningDevModel.Store.FK_HCPositionLogs_Lobs">
+      <End Role="Lobs" EntitySet="Lobs" />
+      <End Role="HCPositionLogs" EntitySet="HCPositionLogs" />
+    </AssociationSet>
+    <AssociationSet Name="FK_HCPositions_Companies" Association="DisneyHCMLatamPlanningDevModel.Store.FK_HCPositions_Companies">
+      <End Role="Companies" EntitySet="Companies" />
+      <End Role="HCPositions" EntitySet="HCPositions" />
+    </AssociationSet>
+    <AssociationSet Name="FK_HCPositions_CostCenters" Association="DisneyHCMLatamPlanningDevModel.Store.FK_HCPositions_CostCenters">
+      <End Role="CostCenters" EntitySet="CostCenters" />
+      <End Role="HCPositions" EntitySet="HCPositions" />
+    </AssociationSet>
+    <AssociationSet Name="FK_HCPositions_HCPositions" Association="DisneyHCMLatamPlanningDevModel.Store.FK_HCPositions_HCPositions">
+      <End Role="HCPositions" EntitySet="HCPositions" />
+      <End Role="HCPositions1" EntitySet="HCPositions" />
+    </AssociationSet>
+    <AssociationSet Name="FK_HCPositions_HCTypes" Association="DisneyHCMLatamPlanningDevModel.Store.FK_HCPositions_HCTypes">
+      <End Role="HCTypes" EntitySet="HCTypes" />
+      <End Role="HCPositions" EntitySet="HCPositions" />
+    </AssociationSet>
+    <AssociationSet Name="FK_HCPositions_Lobs" Association="DisneyHCMLatamPlanningDevModel.Store.FK_HCPositions_Lobs">
+      <End Role="Lobs" EntitySet="Lobs" />
+      <End Role="HCPositions" EntitySet="HCPositions" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ModifiedGlobalsMonthValues_SBForecastPlanModifiedGlobals" Association="DisneyHCMLatamPlanningDevModel.Store.FK_ModifiedGlobalsMonthValues_SBForecastPlanModifiedGlobals">
+      <End Role="SBForecastPlanModifiedGlobals" EntitySet="SBForecastPlanModifiedGlobals" />
+      <End Role="ModifiedGlobalsMonthValues" EntitySet="ModifiedGlobalsMonthValues" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ParameterMonthValues_ParameterValues" Association="DisneyHCMLatamPlanningDevModel.Store.FK_ParameterMonthValues_ParameterValues">
+      <End Role="ParameterValues" EntitySet="ParameterValues" />
+      <End Role="ParameterMonthValues" EntitySet="ParameterMonthValues" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Parameters_Companies" Association="DisneyHCMLatamPlanningDevModel.Store.FK_Parameters_Companies">
+      <End Role="Companies" EntitySet="Companies" />
+      <End Role="Parameters" EntitySet="Parameters" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Parameters_ParameterDataType" Association="DisneyHCMLatamPlanningDevModel.Store.FK_Parameters_ParameterDataType">
+      <End Role="ParameterDataTypes" EntitySet="ParameterDataTypes" />
+      <End Role="Parameters" EntitySet="Parameters" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Parameters_ParameterTypes" Association="DisneyHCMLatamPlanningDevModel.Store.FK_Parameters_ParameterTypes">
+      <End Role="ParameterTypes" EntitySet="ParameterTypes" />
+      <End Role="Parameters" EntitySet="Parameters" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ParameterValues_FiscalYears" Association="DisneyHCMLatamPlanningDevModel.Store.FK_ParameterValues_FiscalYears">
+      <End Role="FiscalYears" EntitySet="FiscalYears" />
+      <End Role="ParameterValues" EntitySet="ParameterValues" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ParameterValues_Parameters" Association="DisneyHCMLatamPlanningDevModel.Store.FK_ParameterValues_Parameters">
+      <End Role="Parameters" EntitySet="Parameters" />
+      <End Role="ParameterValues" EntitySet="ParameterValues" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ResultParameterMonthValues_ResultParameters" Association="DisneyHCMLatamPlanningDevModel.Store.FK_ResultParameterMonthValues_ResultParameters">
+      <End Role="ResultParameters" EntitySet="ResultParameters" />
+      <End Role="ResultParameterMonthValues" EntitySet="ResultParameterMonthValues" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ResultParameters_ConceptResults" Association="DisneyHCMLatamPlanningDevModel.Store.FK_ResultParameters_ConceptResults">
+      <End Role="ConceptResults" EntitySet="ConceptResults" />
+      <End Role="ResultParameters" EntitySet="ResultParameters" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ResultParameters_Parameters" Association="DisneyHCMLatamPlanningDevModel.Store.FK_ResultParameters_Parameters">
+      <End Role="Parameters" EntitySet="Parameters" />
+      <End Role="ResultParameters" EntitySet="ResultParameters" />
+    </AssociationSet>
+    <AssociationSet Name="FK_SBForecastPlanAdjustments_Companies" Association="DisneyHCMLatamPlanningDevModel.Store.FK_SBForecastPlanAdjustments_Companies">
+      <End Role="Companies" EntitySet="Companies" />
+      <End Role="SBForecastPlanAdjustments" EntitySet="SBForecastPlanAdjustments" />
+    </AssociationSet>
+    <AssociationSet Name="FK_SBForecastPlanAdjustments_CostCenters" Association="DisneyHCMLatamPlanningDevModel.Store.FK_SBForecastPlanAdjustments_CostCenters">
+      <End Role="CostCenters" EntitySet="CostCenters" />
+      <End Role="SBForecastPlanAdjustments" EntitySet="SBForecastPlanAdjustments" />
+    </AssociationSet>
+    <AssociationSet Name="FK_SBForecastPlanAdjustments_ExpenseTypes" Association="DisneyHCMLatamPlanningDevModel.Store.FK_SBForecastPlanAdjustments_ExpenseTypes">
+      <End Role="ExpenseTypes" EntitySet="ExpenseTypes" />
+      <End Role="SBForecastPlanAdjustments" EntitySet="SBForecastPlanAdjustments" />
+    </AssociationSet>
+    <AssociationSet Name="FK_SBForecastPlanAdjustments_GLAccounts" Association="DisneyHCMLatamPlanningDevModel.Store.FK_SBForecastPlanAdjustments_GLAccounts">
+      <End Role="GLAccounts" EntitySet="GLAccounts" />
+      <End Role="SBForecastPlanAdjustments" EntitySet="SBForecastPlanAdjustments" />
+    </AssociationSet>
+    <AssociationSet Name="FK_SBForecastPlanAdjustments_HCTypes" Association="DisneyHCMLatamPlanningDevModel.Store.FK_SBForecastPlanAdjustments_HCTypes">
+      <End Role="HCTypes" EntitySet="HCTypes" />
+      <End Role="SBForecastPlanAdjustments" EntitySet="SBForecastPlanAdjustments" />
+    </AssociationSet>
+    <AssociationSet Name="FK_SBForecastPlanAdjustments_Lobs" Association="DisneyHCMLatamPlanningDevModel.Store.FK_SBForecastPlanAdjustments_Lobs">
+      <End Role="Lobs" EntitySet="Lobs" />
+      <End Role="SBForecastPlanAdjustments" EntitySet="SBForecastPlanAdjustments" />
+    </AssociationSet>
+    <AssociationSet Name="FK_SBForecastPlanAdjustments_Lobs1" Association="DisneyHCMLatamPlanningDevModel.Store.FK_SBForecastPlanAdjustments_Lobs1">
+      <End Role="Lobs" EntitySet="Lobs" />
+      <End Role="SBForecastPlanAdjustments" EntitySet="SBForecastPlanAdjustments" />
+    </AssociationSet>
+    <AssociationSet Name="FK_SBForecastPlanAdjustments_SBForecastPlans" Association="DisneyHCMLatamPlanningDevModel.Store.FK_SBForecastPlanAdjustments_SBForecastPlans">
+      <End Role="SBForecastPlans" EntitySet="SBForecastPlans" />
+      <End Role="SBForecastPlanAdjustments" EntitySet="SBForecastPlanAdjustments" />
+    </AssociationSet>
+    <AssociationSet Name="FK_SBForecastPlanData_ParameterDataType" Association="DisneyHCMLatamPlanningDevModel.Store.FK_SBForecastPlanData_ParameterDataType">
+      <End Role="ParameterDataTypes" EntitySet="ParameterDataTypes" />
+      <End Role="SBForecastPlanData" EntitySet="SBForecastPlanData" />
+    </AssociationSet>
+    <AssociationSet Name="FK_SBForecastPlanData_SBForecastPlanPositions" Association="DisneyHCMLatamPlanningDevModel.Store.FK_SBForecastPlanData_SBForecastPlanPositions">
+      <End Role="SBForecastPlanPositions" EntitySet="SBForecastPlanPositions" />
+      <End Role="SBForecastPlanData" EntitySet="SBForecastPlanData" />
+    </AssociationSet>
+    <AssociationSet Name="FK_SBForecastPlanModifiedGlobals_Parameters" Association="DisneyHCMLatamPlanningDevModel.Store.FK_SBForecastPlanModifiedGlobals_Parameters">
+      <End Role="Parameters" EntitySet="Parameters" />
+      <End Role="SBForecastPlanModifiedGlobals" EntitySet="SBForecastPlanModifiedGlobals" />
+    </AssociationSet>
+    <AssociationSet Name="FK_SBForecastPlanModifiedGlobals_SBForecastPlans" Association="DisneyHCMLatamPlanningDevModel.Store.FK_SBForecastPlanModifiedGlobals_SBForecastPlans">
+      <End Role="SBForecastPlans" EntitySet="SBForecastPlans" />
+      <End Role="SBForecastPlanModifiedGlobals" EntitySet="SBForecastPlanModifiedGlobals" />
+    </AssociationSet>
+    <AssociationSet Name="FK_SBForecastPlanPositions_EmployeeLogs" Association="DisneyHCMLatamPlanningDevModel.Store.FK_SBForecastPlanPositions_EmployeeLogs">
+      <End Role="EmployeeLogs" EntitySet="EmployeeLogs" />
+      <End Role="SBForecastPlanPositions" EntitySet="SBForecastPlanPositions" />
+    </AssociationSet>
+    <AssociationSet Name="FK_SBForecastPlanPositions_HCPositionLogs" Association="DisneyHCMLatamPlanningDevModel.Store.FK_SBForecastPlanPositions_HCPositionLogs">
+      <End Role="HCPositionLogs" EntitySet="HCPositionLogs" />
+      <End Role="SBForecastPlanPositions" EntitySet="SBForecastPlanPositions" />
+    </AssociationSet>
+    <AssociationSet Name="FK_SBForecastPlanPositions_SBForecastPlans" Association="DisneyHCMLatamPlanningDevModel.Store.FK_SBForecastPlanPositions_SBForecastPlans">
+      <End Role="SBForecastPlans" EntitySet="SBForecastPlans" />
+      <End Role="SBForecastPlanPositions" EntitySet="SBForecastPlanPositions" />
+    </AssociationSet>
+    <AssociationSet Name="FK_SBForecastPlans_FiscalYears" Association="DisneyHCMLatamPlanningDevModel.Store.FK_SBForecastPlans_FiscalYears">
+      <End Role="FiscalYears" EntitySet="FiscalYears" />
+      <End Role="SBForecastPlans" EntitySet="SBForecastPlans" />
+    </AssociationSet>
+    <AssociationSet Name="FK_SBForecastPlans_SBForecastPlanStatuses" Association="DisneyHCMLatamPlanningDevModel.Store.FK_SBForecastPlans_SBForecastPlanStatuses">
+      <End Role="SBForecastPlanStatuses" EntitySet="SBForecastPlanStatuses" />
+      <End Role="SBForecastPlans" EntitySet="SBForecastPlans" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Schemes_Companies" Association="DisneyHCMLatamPlanningDevModel.Store.FK_Schemes_Companies">
+      <End Role="Companies" EntitySet="Companies" />
+      <End Role="Schemes" EntitySet="Schemes" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Schemes_HCTypes" Association="DisneyHCMLatamPlanningDevModel.Store.FK_Schemes_HCTypes">
+      <End Role="HCTypes" EntitySet="HCTypes" />
+      <End Role="Schemes" EntitySet="Schemes" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="Companies">
+    <Key>
+      <PropertyRef Name="CompanyID" />
+    </Key>
+    <Property Name="CompanyID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="Code" Type="varchar" Nullable="false" MaxLength="20" />
+    <Property Name="Description" Type="varchar" Nullable="false" MaxLength="50" />
+    <Property Name="TerritoryID" Type="int" Nullable="false" />
+    <Property Name="IsActive" Type="bit" Nullable="false" />
+  </EntityType>
+  <EntityType Name="ConceptFilters">
+    <Key>
+      <PropertyRef Name="ConceptFilterId" />
+    </Key>
+    <Property Name="ConceptFilterId" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="ConceptId" Type="int" Nullable="false" />
+    <Property Name="FilterId" Type="int" Nullable="false" />
+    <Property Name="Sequence" Type="int" />
+    <Property Name="Connector" Type="nvarchar" MaxLength="3" />
+  </EntityType>
+  <EntityType Name="ConceptResults">
+    <Key>
+      <PropertyRef Name="ConceptResultId" />
+    </Key>
+    <Property Name="ConceptResultId" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="SBForecastPlanPositionId" Type="int" Nullable="false" />
+    <Property Name="ConceptId" Type="int" Nullable="false" />
+    <Property Name="CalendarMonthId" Type="int" Nullable="false" />
+    <Property Name="Value" Type="varbinary" Nullable="false" MaxLength="256" />
+  </EntityType>
+  <EntityType Name="Concepts">
+    <Key>
+      <PropertyRef Name="ConceptId" />
+    </Key>
+    <Property Name="ConceptId" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="SchemaId" Type="int" Nullable="false" />
+    <Property Name="Title" Type="varchar" Nullable="false" MaxLength="50" />
+    <Property Name="Description" Type="varchar" Nullable="false" MaxLength="200" />
+    <Property Name="ExpenseTypeId" Type="int" />
+    <Property Name="Sequence" Type="int" Nullable="false" />
+    <Property Name="GLAccountID" Type="int" />
+    <Property Name="Parameter1Id" Type="int" />
+    <Property Name="Parameter2Id" Type="int" />
+    <Property Name="Parameter3Id" Type="int" />
+    <Property Name="Parameter4Id" Type="int" />
+    <Property Name="Operation" Type="varchar" MaxLength="400" />
+    <Property Name="OutputParameter1Id" Type="int" />
+    <Property Name="OutputParameter2Id" Type="int" />
+  </EntityType>
+  <EntityType Name="ConceptsValidMonths">
+    <Key>
+      <PropertyRef Name="ConceptValidMonthId" />
+    </Key>
+    <Property Name="ConceptValidMonthId" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="ConceptId" Type="int" Nullable="false" />
+    <Property Name="MonthId" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="CostCenters">
+    <Key>
+      <PropertyRef Name="CostCenterID" />
+    </Key>
+    <Property Name="CostCenterID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="Description" Type="varchar" Nullable="false" MaxLength="50" />
+    <Property Name="Code" Type="varchar" Nullable="false" MaxLength="20" />
+    <Property Name="CostCenterGroupID" Type="int" Nullable="false" />
+    <Property Name="DepartmentID" Type="int" Nullable="false" />
+    <Property Name="CompanyID" Type="int" Nullable="false" />
+    <Property Name="IsActive" Type="bit" Nullable="false" />
+  </EntityType>
+  <EntityType Name="EmployeeLogs">
+    <Key>
+      <PropertyRef Name="EmployeeLogID" />
+    </Key>
+    <Property Name="EmployeeLogID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="EmployeeID" Type="int" Nullable="false" />
+    <Property Name="FirstName" Type="varchar" Nullable="false" MaxLength="50" />
+    <Property Name="MiddleName" Type="varchar" Nullable="false" MaxLength="50" />
+    <Property Name="LastName" Type="varchar" Nullable="false" MaxLength="50" />
+    <Property Name="ShortName" Type="varchar" MaxLength="100" />
+    <Property Name="FullName" Type="varchar" Nullable="false" MaxLength="153" StoreGeneratedPattern="Computed" />
+    <Property Name="DepartmentID" Type="int" Nullable="false" />
+    <Property Name="IdentificationNumber" Type="varchar" Nullable="false" MaxLength="50" />
+    <Property Name="HCPositionID" Type="int" />
+    <Property Name="EffectiveDate" Type="datetime" Nullable="false" />
+    <Property Name="LastWorkingDate" Type="datetime" />
+    <Property Name="EMail" Type="varchar" Nullable="false" MaxLength="100" />
+    <Property Name="BusinessPhone" Type="varchar" MaxLength="50" />
+    <Property Name="HomePhone" Type="varchar" MaxLength="50" />
+    <Property Name="MobilePhone" Type="varchar" MaxLength="50" />
+    <Property Name="TaxNumber" Type="varchar" MaxLength="50" />
+    <Property Name="DateOfBirth" Type="datetime" />
+    <Property Name="Nationality" Type="varchar" MaxLength="50" />
+    <Property Name="SAPUser" Type="varchar" MaxLength="50" />
+    <Property Name="PhotoID" Type="int" />
+    <Property Name="Status" Type="tinyint" Nullable="false" />
+    <Property Name="StatusDescription" Type="varchar" Nullable="false" MaxLength="24" StoreGeneratedPattern="Computed" />
+    <Property Name="UserName" Type="varchar" MaxLength="50" />
+    <Property Name="Location" Type="varchar" MaxLength="255" />
+    <Property Name="DaysOfWork" Type="int" StoreGeneratedPattern="Computed" />
+    <Property Name="YearsOfWork" Type="int" StoreGeneratedPattern="Computed" />
+  </EntityType>
+  <EntityType Name="Employees">
+    <Key>
+      <PropertyRef Name="EmployeeID" />
+    </Key>
+    <Property Name="EmployeeID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="FirstName" Type="varchar" Nullable="false" MaxLength="50" />
+    <Property Name="MiddleName" Type="varchar" Nullable="false" MaxLength="50" />
+    <Property Name="LastName" Type="varchar" Nullable="false" MaxLength="50" />
+    <Property Name="ShortName" Type="varchar" MaxLength="100" />
+    <Property Name="FullName" Type="varchar" Nullable="false" MaxLength="153" StoreGeneratedPattern="Computed" />
+    <Property Name="DepartmentID" Type="int" Nullable="false" />
+    <Property Name="IdentificationNumber" Type="varchar" Nullable="false" MaxLength="50" />
+    <Property Name="HCPositionID" Type="int" />
+    <Property Name="EffectiveDate" Type="datetime" Nullable="false" />
+    <Property Name="LastWorkingDate" Type="datetime" />
+    <Property Name="EMail" Type="varchar" Nullable="false" MaxLength="100" />
+    <Property Name="BusinessPhone" Type="varchar" MaxLength="50" />
+    <Property Name="HomePhone" Type="varchar" MaxLength="50" />
+    <Property Name="MobilePhone" Type="varchar" MaxLength="50" />
+    <Property Name="TaxNumber" Type="varchar" MaxLength="50" />
+    <Property Name="DateOfBirth" Type="datetime" />
+    <Property Name="Nationality" Type="varchar" MaxLength="50" />
+    <Property Name="SAPUser" Type="varchar" MaxLength="50" />
+    <Property Name="PhotoID" Type="int" />
+    <Property Name="Status" Type="tinyint" Nullable="false" />
+    <Property Name="StatusDescription" Type="varchar" Nullable="false" MaxLength="24" StoreGeneratedPattern="Computed" />
+    <Property Name="UserName" Type="varchar" MaxLength="50" />
+    <Property Name="Location" Type="varchar" MaxLength="255" />
+    <Property Name="DaysOfWork" Type="int" StoreGeneratedPattern="Computed" />
+    <Property Name="YearsOfWork" Type="int" StoreGeneratedPattern="Computed" />
+  </EntityType>
+  <EntityType Name="ExpenseGroups">
+    <Key>
+      <PropertyRef Name="ExpenseGroupId" />
+    </Key>
+    <Property Name="ExpenseGroupId" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="Code" Type="varchar" Nullable="false" MaxLength="20" />
+    <Property Name="Description" Type="varchar" Nullable="false" MaxLength="50" />
+    <Property Name="IsActive" Type="bit" Nullable="false" />
+  </EntityType>
+  <EntityType Name="ExpenseTypes">
+    <Key>
+      <PropertyRef Name="ExpenseTypeId" />
+    </Key>
+    <Property Name="ExpenseTypeId" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="ExpenseGroupId" Type="int" Nullable="false" />
+    <Property Name="Code" Type="varchar" Nullable="false" MaxLength="20" />
+    <Property Name="Description" Type="varchar" Nullable="false" MaxLength="50" />
+    <Property Name="IsActive" Type="bit" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Filters">
+    <Key>
+      <PropertyRef Name="FilterId" />
+    </Key>
+    <Property Name="FilterId" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="Title" Type="varchar" Nullable="false" MaxLength="50" />
+    <Property Name="FilterTypeId" Type="int" Nullable="false" />
+    <Property Name="Description" Type="varchar" Nullable="false" MaxLength="200" />
+    <Property Name="Parameter1Id" Type="int" />
+    <Property Name="Parameter2Id" Type="int" />
+    <Property Name="Operation" Type="varchar" Nullable="false" MaxLength="200" />
+  </EntityType>
+  <EntityType Name="FilterTypes">
+    <Key>
+      <PropertyRef Name="FilterTypeId" />
+    </Key>
+    <Property Name="FilterTypeId" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="varchar" Nullable="false" MaxLength="20" />
+  </EntityType>
+  <EntityType Name="FiscalYears">
+    <Key>
+      <PropertyRef Name="FiscalYearID" />
+    </Key>
+    <Property Name="FiscalYearID" Type="int" Nullable="false" />
+    <Property Name="Code" Type="char" Nullable="false" MaxLength="4" />
+    <Property Name="BeginDate" Type="datetime" Nullable="false" />
+    <Property Name="EndDate" Type="datetime" Nullable="false" />
+    <Property Name="IsCurrent" Type="bit" Nullable="false" />
+    <Property Name="IsActive" Type="bit" Nullable="false" />
+  </EntityType>
+  <EntityType Name="GLAccounts">
+    <Key>
+      <PropertyRef Name="GLAccountId" />
+    </Key>
+    <Property Name="GLAccountId" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="SAPCode" Type="varchar" Nullable="false" MaxLength="10" />
+    <Property Name="Title" Type="varchar" Nullable="false" MaxLength="50" />
+    <Property Name="IsActive" Type="bit" Nullable="false" />
+  </EntityType>
+  <EntityType Name="HCPositionLogs">
+    <Key>
+      <PropertyRef Name="HCPositionLogID" />
+    </Key>
+    <Property Name="HCPositionLogID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="HCPositionID" Type="int" Nullable="false" />
+    <Property Name="ModifiedDate" Type="datetime" Nullable="false" />
+    <Property Name="OriginType" Type="tinyint" Nullable="false" />
+    <Property Name="Description" Type="varchar" Nullable="false" MaxLength="50" />
+    <Property Name="PlanScheduleID" Type="int" />
+    <Property Name="LobID" Type="int" Nullable="false" />
+    <Property Name="TerritoryID" Type="int" Nullable="false" />
+    <Property Name="CompanyID" Type="int" Nullable="false" />
+    <Property Name="HCParentID" Type="int" />
+    <Property Name="EmployeeID" Type="int" />
+    <Property Name="IHCPositionID" Type="int" />
+    <Property Name="LaborGradeID" Type="int" Nullable="false" />
+    <Property Name="FiscalTimeStartDateID" Type="int" Nullable="false" />
+    <Property Name="FiscalTimeEndDateID" Type="int" />
+    <Property Name="HCTypeID" Type="int" Nullable="false" />
+    <Property Name="CostCenterPrimaryID" Type="int" Nullable="false" />
+    <Property Name="HCStatusID" Type="int" Nullable="false" />
+    <Property Name="UserName" Type="varchar" MaxLength="50" />
+    <Property Name="IsConversion" Type="bit" Nullable="false" />
+    <Property Name="IsNew" Type="bit" Nullable="false" />
+    <Property Name="HCRequestID" Type="int" />
+    <Property Name="AnnualSalary" Type="varbinary" MaxLength="256" />
+    <Property Name="CommisionsElegible" Type="bit" />
+    <Property Name="BonusPlanId" Type="int" />
+    <Property Name="PersonalSubAreaId" Type="int" />
+  </EntityType>
+  <EntityType Name="HCPositions">
+    <Key>
+      <PropertyRef Name="HCPositionID" />
+    </Key>
+    <Property Name="HCPositionID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="OriginType" Type="tinyint" Nullable="false" />
+    <Property Name="Description" Type="varchar" Nullable="false" MaxLength="50" />
+    <Property Name="PlanScheduleID" Type="int" />
+    <Property Name="LobID" Type="int" Nullable="false" />
+    <Property Name="TerritoryID" Type="int" Nullable="false" />
+    <Property Name="CompanyID" Type="int" Nullable="false" />
+    <Property Name="HCParentID" Type="int" />
+    <Property Name="IHCPositionID" Type="int" />
+    <Property Name="LaborGradeID" Type="int" Nullable="false" />
+    <Property Name="FiscalTimeStartDateID" Type="int" Nullable="false" />
+    <Property Name="FiscalTimeEndDateID" Type="int" />
+    <Property Name="HCTypeID" Type="int" Nullable="false" />
+    <Property Name="CostCenterPrimaryID" Type="int" Nullable="false" />
+    <Property Name="HCStatusID" Type="int" Nullable="false" />
+    <Property Name="ModifiedDate" Type="datetime" Nullable="false" />
+    <Property Name="UserName" Type="varchar" MaxLength="50" />
+    <Property Name="IsConversion" Type="bit" Nullable="false" />
+    <Property Name="IsNew" Type="bit" Nullable="false" />
+    <Property Name="SAPPositionNumber" Type="varchar" MaxLength="50" />
+    <Property Name="AnnualSalary" Type="decimal" Precision="25" Scale="6" />
+    <Property Name="BonusPlanId" Type="int" />
+    <Property Name="PersonalSubAreaId" Type="int" />
+    <Property Name="CommisionsElegible" Type="bit" />
+  </EntityType>
+  <EntityType Name="HCTypes">
+    <Key>
+      <PropertyRef Name="HCTypeID" />
+    </Key>
+    <Property Name="HCTypeID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="Description" Type="varchar" Nullable="false" MaxLength="50" />
+    <Property Name="Code" Type="varchar" Nullable="false" MaxLength="20" />
+    <Property Name="IsActive" Type="bit" Nullable="false" />
+    <Property Name="IsTemporal" Type="bit" Nullable="false" />
+    <Property Name="IsAdjust" Type="bit" Nullable="false" />
+    <Property Name="ADMWAccountID" Type="int" Nullable="false" />
+    <Property Name="ADMWAccountType" Type="varchar" Nullable="false" MaxLength="10" />
+  </EntityType>
+  <EntityType Name="Lobs">
+    <Key>
+      <PropertyRef Name="LobID" />
+    </Key>
+    <Property Name="LobID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="Description" Type="varchar" Nullable="false" MaxLength="50" />
+    <Property Name="IsActive" Type="bit" Nullable="false" />
+  </EntityType>
+  <EntityType Name="ModifiedGlobalsMonthValues">
+    <Key>
+      <PropertyRef Name="ModifiedGlobalsMonthValuesId" />
+    </Key>
+    <Property Name="ModifiedGlobalsMonthValuesId" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="SBForecastPlanModifiedGlobalId" Type="int" Nullable="false" />
+    <Property Name="Month" Type="int" Nullable="false" />
+    <Property Name="Value" Type="decimal" Nullable="false" Precision="25" Scale="6" />
+  </EntityType>
+  <EntityType Name="ParameterDataTypes">
+    <Key>
+      <PropertyRef Name="ParameterDataTypeID" />
+    </Key>
+    <Property Name="ParameterDataTypeID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="varchar" Nullable="false" MaxLength="50" />
+    <Property Name="IsActive" Type="bit" Nullable="false" />
+  </EntityType>
+  <EntityType Name="ParameterMonthValues">
+    <Key>
+      <PropertyRef Name="ParameterMonthValueId" />
+    </Key>
+    <Property Name="ParameterMonthValueId" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="ParameterValueId" Type="int" Nullable="false" />
+    <Property Name="Month" Type="int" Nullable="false" />
+    <Property Name="Value" Type="decimal" Nullable="false" Precision="26" Scale="6" />
+  </EntityType>
+  <EntityType Name="Parameters">
+    <Key>
+      <PropertyRef Name="ParameterId" />
+    </Key>
+    <Property Name="ParameterId" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="ParameterTypeId" Type="int" Nullable="false" />
+    <Property Name="ParameterDataTypeID" Type="int" />
+    <Property Name="CompanyId" Type="int" Nullable="false" />
+    <Property Name="Name" Type="varchar" Nullable="false" MaxLength="50" />
+    <Property Name="Description" Type="varchar" Nullable="false" MaxLength="200" />
+    <Property Name="IsAccumulator" Type="bit" Nullable="false" />
+    <Property Name="IsConstant" Type="bit" Nullable="false" />
+    <Property Name="IsModifiable" Type="bit" Nullable="false" />
+    <Property Name="TableName" Type="varchar" MaxLength="50" />
+    <Property Name="ColumnName" Type="varchar" MaxLength="50" />
+    <Property Name="FixedValue" Type="varchar" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="ParameterTypes">
+    <Key>
+      <PropertyRef Name="ParameterTypeId" />
+    </Key>
+    <Property Name="ParameterTypeId" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="nvarchar" Nullable="false" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="ParameterValues">
+    <Key>
+      <PropertyRef Name="ParameterValuesId" />
+    </Key>
+    <Property Name="ParameterValuesId" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="ParameterId" Type="int" Nullable="false" />
+    <Property Name="FiscalYearID" Type="int" />
+  </EntityType>
+  <EntityType Name="ResultParameterMonthValues">
+    <Key>
+      <PropertyRef Name="ResultParameterMonthValueId" />
+    </Key>
+    <Property Name="ResultParameterMonthValueId" Type="int" Nullable="false" />
+    <Property Name="ResultParameterId" Type="int" Nullable="false" />
+    <Property Name="Month" Type="int" Nullable="false" />
+    <Property Name="Value" Type="decimal" Nullable="false" Precision="25" Scale="6" />
+  </EntityType>
+  <EntityType Name="ResultParameters">
+    <Key>
+      <PropertyRef Name="ResultParameterId" />
+    </Key>
+    <Property Name="ResultParameterId" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="ConceptResultId" Type="int" Nullable="false" />
+    <Property Name="ParameterId" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="SBForecastPlanAdjustments">
+    <Key>
+      <PropertyRef Name="SBForecastPlanAdjustmentId" />
+    </Key>
+    <Property Name="SBForecastPlanAdjustmentId" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="SBForecastPlanId" Type="int" Nullable="false" />
+    <Property Name="Title" Type="varchar" Nullable="false" MaxLength="50" />
+    <Property Name="CompanyId" Type="int" />
+    <Property Name="CostCenterId" Type="int" />
+    <Property Name="LobId" Type="int" Nullable="false" />
+    <Property Name="HCTypeId" Type="int" Nullable="false" />
+    <Property Name="GLAccountID" Type="int" Nullable="false" />
+    <Property Name="ExpenseTypeId" Type="int" Nullable="false" />
+    <Property Name="Value" Type="decimal" Nullable="false" Precision="25" Scale="6" />
+    <Property Name="CalendarMonthId" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="SBForecastPlanData">
+    <Key>
+      <PropertyRef Name="SBForecastPlanDataID" />
+    </Key>
+    <Property Name="SBForecastPlanDataID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="SBForecastPlanPositionId" Type="int" Nullable="false" />
+    <Property Name="ParameterDataTypeID" Type="int" Nullable="false" />
+    <Property Name="Month" Type="int" Nullable="false" />
+    <Property Name="Value" Type="decimal" Nullable="false" Precision="26" Scale="6" />
+  </EntityType>
+  <EntityType Name="SBForecastPlanLogs">
+    <Key>
+      <PropertyRef Name="SBForecastPlanLogId" />
+    </Key>
+    <Property Name="SBForecastPlanLogId" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="SBForecastPlanId" Type="int" Nullable="false" />
+    <Property Name="Date" Type="datetime" Nullable="false" />
+    <Property Name="TypeId" Type="int" Nullable="false" />
+    <Property Name="Message" Type="varchar" Nullable="false" MaxLength="500" />
+  </EntityType>
+  <EntityType Name="SBForecastPlanModifiedGlobals">
+    <Key>
+      <PropertyRef Name="SBForecastPlanModifiedGlobalId" />
+    </Key>
+    <Property Name="SBForecastPlanModifiedGlobalId" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="SBForecastPlanId" Type="int" Nullable="false" />
+    <Property Name="ParameterId" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="SBForecastPlanPositions">
+    <Key>
+      <PropertyRef Name="SBForecastPlanPositionId" />
+    </Key>
+    <Property Name="SBForecastPlanPositionId" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="SBForecastPlanId" Type="int" Nullable="false" />
+    <Property Name="HCPositionLogId" Type="int" Nullable="false" />
+    <Property Name="EmployeeLogId" Type="int" />
+  </EntityType>
+  <EntityType Name="SBForecastPlans">
+    <Key>
+      <PropertyRef Name="SBForecastPlanId" />
+    </Key>
+    <Property Name="SBForecastPlanId" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="varchar" Nullable="false" MaxLength="50" />
+    <Property Name="Description" Type="varchar" Nullable="false" MaxLength="200" />
+    <Property Name="FiscalYearId" Type="int" Nullable="false" />
+    <Property Name="MonthFrom" Type="int" Nullable="false" />
+    <Property Name="MonthTo" Type="int" Nullable="false" />
+    <Property Name="CreationDate" Type="date" Nullable="false" />
+    <Property Name="ExecutionDate" Type="date" />
+    <Property Name="UserName" Type="varchar" Nullable="false" MaxLength="50" />
+    <Property Name="SBForecastPlanStatusId" Type="int" Nullable="false" />
+    <Property Name="UploadedFileName" Type="varchar" MaxLength="100" />
+  </EntityType>
+  <EntityType Name="SBForecastPlanStatuses">
+    <Key>
+      <PropertyRef Name="SBForecastPlanStatusID" />
+    </Key>
+    <Property Name="SBForecastPlanStatusID" Type="int" Nullable="false" />
+    <Property Name="Description" Type="varchar" Nullable="false" MaxLength="20" />
+  </EntityType>
+  <EntityType Name="Schemes">
+    <Key>
+      <PropertyRef Name="SchemeId" />
+    </Key>
+    <Property Name="SchemeId" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="HCTypeId" Type="int" Nullable="false" />
+    <Property Name="CompanyId" Type="int" Nullable="false" />
+    <Property Name="UserName" Type="varchar" Nullable="false" MaxLength="50" />
+    <Property Name="ModifiedUserName" Type="varchar" MaxLength="50" />
+    <Property Name="CreationDate" Type="date" Nullable="false" />
+    <Property Name="ModificationDate" Type="date" />
+    <Property Name="IsActive" Type="bit" Nullable="false" />
+  </EntityType>
+  <Association Name="FK_ConceptFilters_Concepts">
+    <End Role="Concepts" Type="DisneyHCMLatamPlanningDevModel.Store.Concepts" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="ConceptFilters" Type="DisneyHCMLatamPlanningDevModel.Store.ConceptFilters" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Concepts">
+        <PropertyRef Name="ConceptId" />
+      </Principal>
+      <Dependent Role="ConceptFilters">
+        <PropertyRef Name="ConceptId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ConceptFilters_filters">
+    <End Role="Filters" Type="DisneyHCMLatamPlanningDevModel.Store.Filters" Multiplicity="1" />
+    <End Role="ConceptFilters" Type="DisneyHCMLatamPlanningDevModel.Store.ConceptFilters" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Filters">
+        <PropertyRef Name="FilterId" />
+      </Principal>
+      <Dependent Role="ConceptFilters">
+        <PropertyRef Name="FilterId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ConceptResults_Concepts">
+    <End Role="Concepts" Type="DisneyHCMLatamPlanningDevModel.Store.Concepts" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="ConceptResults" Type="DisneyHCMLatamPlanningDevModel.Store.ConceptResults" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Concepts">
+        <PropertyRef Name="ConceptId" />
+      </Principal>
+      <Dependent Role="ConceptResults">
+        <PropertyRef Name="ConceptId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ConceptResults_SBForecastPlanPositions">
+    <End Role="SBForecastPlanPositions" Type="DisneyHCMLatamPlanningDevModel.Store.SBForecastPlanPositions" Multiplicity="1" />
+    <End Role="ConceptResults" Type="DisneyHCMLatamPlanningDevModel.Store.ConceptResults" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="SBForecastPlanPositions">
+        <PropertyRef Name="SBForecastPlanPositionId" />
+      </Principal>
+      <Dependent Role="ConceptResults">
+        <PropertyRef Name="SBForecastPlanPositionId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Concepts_ExpenseTypes">
+    <End Role="ExpenseTypes" Type="DisneyHCMLatamPlanningDevModel.Store.ExpenseTypes" Multiplicity="0..1" />
+    <End Role="Concepts" Type="DisneyHCMLatamPlanningDevModel.Store.Concepts" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ExpenseTypes">
+        <PropertyRef Name="ExpenseTypeId" />
+      </Principal>
+      <Dependent Role="Concepts">
+        <PropertyRef Name="ExpenseTypeId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Concepts_GLAccounts">
+    <End Role="GLAccounts" Type="DisneyHCMLatamPlanningDevModel.Store.GLAccounts" Multiplicity="0..1" />
+    <End Role="Concepts" Type="DisneyHCMLatamPlanningDevModel.Store.Concepts" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="GLAccounts">
+        <PropertyRef Name="GLAccountId" />
+      </Principal>
+      <Dependent Role="Concepts">
+        <PropertyRef Name="GLAccountID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Concepts_OutputParameter1">
+    <End Role="Parameters" Type="DisneyHCMLatamPlanningDevModel.Store.Parameters" Multiplicity="0..1" />
+    <End Role="Concepts" Type="DisneyHCMLatamPlanningDevModel.Store.Concepts" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Parameters">
+        <PropertyRef Name="ParameterId" />
+      </Principal>
+      <Dependent Role="Concepts">
+        <PropertyRef Name="OutputParameter1Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Concepts_OutputParameter2">
+    <End Role="Parameters" Type="DisneyHCMLatamPlanningDevModel.Store.Parameters" Multiplicity="0..1" />
+    <End Role="Concepts" Type="DisneyHCMLatamPlanningDevModel.Store.Concepts" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Parameters">
+        <PropertyRef Name="ParameterId" />
+      </Principal>
+      <Dependent Role="Concepts">
+        <PropertyRef Name="OutputParameter2Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Concepts_Parameters1">
+    <End Role="Parameters" Type="DisneyHCMLatamPlanningDevModel.Store.Parameters" Multiplicity="0..1" />
+    <End Role="Concepts" Type="DisneyHCMLatamPlanningDevModel.Store.Concepts" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Parameters">
+        <PropertyRef Name="ParameterId" />
+      </Principal>
+      <Dependent Role="Concepts">
+        <PropertyRef Name="Parameter1Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Concepts_Parameters2">
+    <End Role="Parameters" Type="DisneyHCMLatamPlanningDevModel.Store.Parameters" Multiplicity="0..1" />
+    <End Role="Concepts" Type="DisneyHCMLatamPlanningDevModel.Store.Concepts" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Parameters">
+        <PropertyRef Name="ParameterId" />
+      </Principal>
+      <Dependent Role="Concepts">
+        <PropertyRef Name="Parameter2Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Concepts_Parameters3">
+    <End Role="Parameters" Type="DisneyHCMLatamPlanningDevModel.Store.Parameters" Multiplicity="0..1" />
+    <End Role="Concepts" Type="DisneyHCMLatamPlanningDevModel.Store.Concepts" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Parameters">
+        <PropertyRef Name="ParameterId" />
+      </Principal>
+      <Dependent Role="Concepts">
+        <PropertyRef Name="Parameter3Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Concepts_Parameters4">
+    <End Role="Parameters" Type="DisneyHCMLatamPlanningDevModel.Store.Parameters" Multiplicity="0..1" />
+    <End Role="Concepts" Type="DisneyHCMLatamPlanningDevModel.Store.Concepts" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Parameters">
+        <PropertyRef Name="ParameterId" />
+      </Principal>
+      <Dependent Role="Concepts">
+        <PropertyRef Name="Parameter4Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Concepts_Schemes">
+    <End Role="Schemes" Type="DisneyHCMLatamPlanningDevModel.Store.Schemes" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="Concepts" Type="DisneyHCMLatamPlanningDevModel.Store.Concepts" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Schemes">
+        <PropertyRef Name="SchemeId" />
+      </Principal>
+      <Dependent Role="Concepts">
+        <PropertyRef Name="SchemaId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ConceptsValidMonths_Concepts">
+    <End Role="Concepts" Type="DisneyHCMLatamPlanningDevModel.Store.Concepts" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="ConceptsValidMonths" Type="DisneyHCMLatamPlanningDevModel.Store.ConceptsValidMonths" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Concepts">
+        <PropertyRef Name="ConceptId" />
+      </Principal>
+      <Dependent Role="ConceptsValidMonths">
+        <PropertyRef Name="ConceptId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_CostCenters_Companies">
+    <End Role="Companies" Type="DisneyHCMLatamPlanningDevModel.Store.Companies" Multiplicity="1" />
+    <End Role="CostCenters" Type="DisneyHCMLatamPlanningDevModel.Store.CostCenters" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Companies">
+        <PropertyRef Name="CompanyID" />
+      </Principal>
+      <Dependent Role="CostCenters">
+        <PropertyRef Name="CompanyID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_EmployeeLogs_Employees">
+    <End Role="Employees" Type="DisneyHCMLatamPlanningDevModel.Store.Employees" Multiplicity="1" />
+    <End Role="EmployeeLogs" Type="DisneyHCMLatamPlanningDevModel.Store.EmployeeLogs" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Employees">
+        <PropertyRef Name="EmployeeID" />
+      </Principal>
+      <Dependent Role="EmployeeLogs">
+        <PropertyRef Name="EmployeeID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Employees_HCPositions">
+    <End Role="HCPositions" Type="DisneyHCMLatamPlanningDevModel.Store.HCPositions" Multiplicity="0..1" />
+    <End Role="Employees" Type="DisneyHCMLatamPlanningDevModel.Store.Employees" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="HCPositions">
+        <PropertyRef Name="HCPositionID" />
+      </Principal>
+      <Dependent Role="Employees">
+        <PropertyRef Name="HCPositionID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ExpenseTypes_ExpenseGroups">
+    <End Role="ExpenseGroups" Type="DisneyHCMLatamPlanningDevModel.Store.ExpenseGroups" Multiplicity="1" />
+    <End Role="ExpenseTypes" Type="DisneyHCMLatamPlanningDevModel.Store.ExpenseTypes" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ExpenseGroups">
+        <PropertyRef Name="ExpenseGroupId" />
+      </Principal>
+      <Dependent Role="ExpenseTypes">
+        <PropertyRef Name="ExpenseGroupId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Filters_FilterTypes">
+    <End Role="FilterTypes" Type="DisneyHCMLatamPlanningDevModel.Store.FilterTypes" Multiplicity="1" />
+    <End Role="Filters" Type="DisneyHCMLatamPlanningDevModel.Store.Filters" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="FilterTypes">
+        <PropertyRef Name="FilterTypeId" />
+      </Principal>
+      <Dependent Role="Filters">
+        <PropertyRef Name="FilterTypeId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Filters_Parameters">
+    <End Role="Parameters" Type="DisneyHCMLatamPlanningDevModel.Store.Parameters" Multiplicity="0..1" />
+    <End Role="Filters" Type="DisneyHCMLatamPlanningDevModel.Store.Filters" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Parameters">
+        <PropertyRef Name="ParameterId" />
+      </Principal>
+      <Dependent Role="Filters">
+        <PropertyRef Name="Parameter1Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Filters_Parameters1">
+    <End Role="Parameters" Type="DisneyHCMLatamPlanningDevModel.Store.Parameters" Multiplicity="0..1" />
+    <End Role="Filters" Type="DisneyHCMLatamPlanningDevModel.Store.Filters" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Parameters">
+        <PropertyRef Name="ParameterId" />
+      </Principal>
+      <Dependent Role="Filters">
+        <PropertyRef Name="Parameter2Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_HCPositionLogs_Companies">
+    <End Role="Companies" Type="DisneyHCMLatamPlanningDevModel.Store.Companies" Multiplicity="1" />
+    <End Role="HCPositionLogs" Type="DisneyHCMLatamPlanningDevModel.Store.HCPositionLogs" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Companies">
+        <PropertyRef Name="CompanyID" />
+      </Principal>
+      <Dependent Role="HCPositionLogs">
+        <PropertyRef Name="CompanyID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_HCPositionLogs_CostCenters">
+    <End Role="CostCenters" Type="DisneyHCMLatamPlanningDevModel.Store.CostCenters" Multiplicity="1" />
+    <End Role="HCPositionLogs" Type="DisneyHCMLatamPlanningDevModel.Store.HCPositionLogs" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="CostCenters">
+        <PropertyRef Name="CostCenterID" />
+      </Principal>
+      <Dependent Role="HCPositionLogs">
+        <PropertyRef Name="CostCenterPrimaryID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_HCPositionLogs_Employees">
+    <End Role="Employees" Type="DisneyHCMLatamPlanningDevModel.Store.Employees" Multiplicity="0..1" />
+    <End Role="HCPositionLogs" Type="DisneyHCMLatamPlanningDevModel.Store.HCPositionLogs" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Employees">
+        <PropertyRef Name="EmployeeID" />
+      </Principal>
+      <Dependent Role="HCPositionLogs">
+        <PropertyRef Name="EmployeeID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_HCPositionLogs_HCPositions">
+    <End Role="HCPositions" Type="DisneyHCMLatamPlanningDevModel.Store.HCPositions" Multiplicity="0..1" />
+    <End Role="HCPositionLogs" Type="DisneyHCMLatamPlanningDevModel.Store.HCPositionLogs" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="HCPositions">
+        <PropertyRef Name="HCPositionID" />
+      </Principal>
+      <Dependent Role="HCPositionLogs">
+        <PropertyRef Name="HCParentID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_HCPositionLogs_HCPositions1">
+    <End Role="HCPositions" Type="DisneyHCMLatamPlanningDevModel.Store.HCPositions" Multiplicity="1" />
+    <End Role="HCPositionLogs" Type="DisneyHCMLatamPlanningDevModel.Store.HCPositionLogs" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="HCPositions">
+        <PropertyRef Name="HCPositionID" />
+      </Principal>
+      <Dependent Role="HCPositionLogs">
+        <PropertyRef Name="HCPositionID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_HCPositionLogs_HCTypes">
+    <End Role="HCTypes" Type="DisneyHCMLatamPlanningDevModel.Store.HCTypes" Multiplicity="1" />
+    <End Role="HCPositionLogs" Type="DisneyHCMLatamPlanningDevModel.Store.HCPositionLogs" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="HCTypes">
+        <PropertyRef Name="HCTypeID" />
+      </Principal>
+      <Dependent Role="HCPositionLogs">
+        <PropertyRef Name="HCTypeID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_HCPositionLogs_Lobs">
+    <End Role="Lobs" Type="DisneyHCMLatamPlanningDevModel.Store.Lobs" Multiplicity="1" />
+    <End Role="HCPositionLogs" Type="DisneyHCMLatamPlanningDevModel.Store.HCPositionLogs" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Lobs">
+        <PropertyRef Name="LobID" />
+      </Principal>
+      <Dependent Role="HCPositionLogs">
+        <PropertyRef Name="LobID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_HCPositions_Companies">
+    <End Role="Companies" Type="DisneyHCMLatamPlanningDevModel.Store.Companies" Multiplicity="1" />
+    <End Role="HCPositions" Type="DisneyHCMLatamPlanningDevModel.Store.HCPositions" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Companies">
+        <PropertyRef Name="CompanyID" />
+      </Principal>
+      <Dependent Role="HCPositions">
+        <PropertyRef Name="CompanyID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_HCPositions_CostCenters">
+    <End Role="CostCenters" Type="DisneyHCMLatamPlanningDevModel.Store.CostCenters" Multiplicity="1" />
+    <End Role="HCPositions" Type="DisneyHCMLatamPlanningDevModel.Store.HCPositions" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="CostCenters">
+        <PropertyRef Name="CostCenterID" />
+      </Principal>
+      <Dependent Role="HCPositions">
+        <PropertyRef Name="CostCenterPrimaryID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_HCPositions_HCPositions">
+    <End Role="HCPositions" Type="DisneyHCMLatamPlanningDevModel.Store.HCPositions" Multiplicity="0..1" />
+    <End Role="HCPositions1" Type="DisneyHCMLatamPlanningDevModel.Store.HCPositions" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="HCPositions">
+        <PropertyRef Name="HCPositionID" />
+      </Principal>
+      <Dependent Role="HCPositions1">
+        <PropertyRef Name="HCParentID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_HCPositions_HCTypes">
+    <End Role="HCTypes" Type="DisneyHCMLatamPlanningDevModel.Store.HCTypes" Multiplicity="1" />
+    <End Role="HCPositions" Type="DisneyHCMLatamPlanningDevModel.Store.HCPositions" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="HCTypes">
+        <PropertyRef Name="HCTypeID" />
+      </Principal>
+      <Dependent Role="HCPositions">
+        <PropertyRef Name="HCTypeID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_HCPositions_Lobs">
+    <End Role="Lobs" Type="DisneyHCMLatamPlanningDevModel.Store.Lobs" Multiplicity="1" />
+    <End Role="HCPositions" Type="DisneyHCMLatamPlanningDevModel.Store.HCPositions" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Lobs">
+        <PropertyRef Name="LobID" />
+      </Principal>
+      <Dependent Role="HCPositions">
+        <PropertyRef Name="LobID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ModifiedGlobalsMonthValues_SBForecastPlanModifiedGlobals">
+    <End Role="SBForecastPlanModifiedGlobals" Type="DisneyHCMLatamPlanningDevModel.Store.SBForecastPlanModifiedGlobals" Multiplicity="1" />
+    <End Role="ModifiedGlobalsMonthValues" Type="DisneyHCMLatamPlanningDevModel.Store.ModifiedGlobalsMonthValues" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="SBForecastPlanModifiedGlobals">
+        <PropertyRef Name="SBForecastPlanModifiedGlobalId" />
+      </Principal>
+      <Dependent Role="ModifiedGlobalsMonthValues">
+        <PropertyRef Name="SBForecastPlanModifiedGlobalId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ParameterMonthValues_ParameterValues">
+    <End Role="ParameterValues" Type="DisneyHCMLatamPlanningDevModel.Store.ParameterValues" Multiplicity="1" />
+    <End Role="ParameterMonthValues" Type="DisneyHCMLatamPlanningDevModel.Store.ParameterMonthValues" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ParameterValues">
+        <PropertyRef Name="ParameterValuesId" />
+      </Principal>
+      <Dependent Role="ParameterMonthValues">
+        <PropertyRef Name="ParameterValueId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Parameters_Companies">
+    <End Role="Companies" Type="DisneyHCMLatamPlanningDevModel.Store.Companies" Multiplicity="1" />
+    <End Role="Parameters" Type="DisneyHCMLatamPlanningDevModel.Store.Parameters" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Companies">
+        <PropertyRef Name="CompanyID" />
+      </Principal>
+      <Dependent Role="Parameters">
+        <PropertyRef Name="CompanyId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Parameters_ParameterDataType">
+    <End Role="ParameterDataTypes" Type="DisneyHCMLatamPlanningDevModel.Store.ParameterDataTypes" Multiplicity="0..1" />
+    <End Role="Parameters" Type="DisneyHCMLatamPlanningDevModel.Store.Parameters" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ParameterDataTypes">
+        <PropertyRef Name="ParameterDataTypeID" />
+      </Principal>
+      <Dependent Role="Parameters">
+        <PropertyRef Name="ParameterDataTypeID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Parameters_ParameterTypes">
+    <End Role="ParameterTypes" Type="DisneyHCMLatamPlanningDevModel.Store.ParameterTypes" Multiplicity="1" />
+    <End Role="Parameters" Type="DisneyHCMLatamPlanningDevModel.Store.Parameters" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ParameterTypes">
+        <PropertyRef Name="ParameterTypeId" />
+      </Principal>
+      <Dependent Role="Parameters">
+        <PropertyRef Name="ParameterTypeId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ParameterValues_FiscalYears">
+    <End Role="FiscalYears" Type="DisneyHCMLatamPlanningDevModel.Store.FiscalYears" Multiplicity="0..1" />
+    <End Role="ParameterValues" Type="DisneyHCMLatamPlanningDevModel.Store.ParameterValues" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="FiscalYears">
+        <PropertyRef Name="FiscalYearID" />
+      </Principal>
+      <Dependent Role="ParameterValues">
+        <PropertyRef Name="FiscalYearID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ParameterValues_Parameters">
+    <End Role="Parameters" Type="DisneyHCMLatamPlanningDevModel.Store.Parameters" Multiplicity="1" />
+    <End Role="ParameterValues" Type="DisneyHCMLatamPlanningDevModel.Store.ParameterValues" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Parameters">
+        <PropertyRef Name="ParameterId" />
+      </Principal>
+      <Dependent Role="ParameterValues">
+        <PropertyRef Name="ParameterId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ResultParameterMonthValues_ResultParameters">
+    <End Role="ResultParameters" Type="DisneyHCMLatamPlanningDevModel.Store.ResultParameters" Multiplicity="1" />
+    <End Role="ResultParameterMonthValues" Type="DisneyHCMLatamPlanningDevModel.Store.ResultParameterMonthValues" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ResultParameters">
+        <PropertyRef Name="ResultParameterId" />
+      </Principal>
+      <Dependent Role="ResultParameterMonthValues">
+        <PropertyRef Name="ResultParameterId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ResultParameters_ConceptResults">
+    <End Role="ConceptResults" Type="DisneyHCMLatamPlanningDevModel.Store.ConceptResults" Multiplicity="1" />
+    <End Role="ResultParameters" Type="DisneyHCMLatamPlanningDevModel.Store.ResultParameters" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ConceptResults">
+        <PropertyRef Name="ConceptResultId" />
+      </Principal>
+      <Dependent Role="ResultParameters">
+        <PropertyRef Name="ConceptResultId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ResultParameters_Parameters">
+    <End Role="Parameters" Type="DisneyHCMLatamPlanningDevModel.Store.Parameters" Multiplicity="1" />
+    <End Role="ResultParameters" Type="DisneyHCMLatamPlanningDevModel.Store.ResultParameters" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Parameters">
+        <PropertyRef Name="ParameterId" />
+      </Principal>
+      <Dependent Role="ResultParameters">
+        <PropertyRef Name="ParameterId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_SBForecastPlanAdjustments_Companies">
+    <End Role="Companies" Type="DisneyHCMLatamPlanningDevModel.Store.Companies" Multiplicity="0..1" />
+    <End Role="SBForecastPlanAdjustments" Type="DisneyHCMLatamPlanningDevModel.Store.SBForecastPlanAdjustments" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Companies">
+        <PropertyRef Name="CompanyID" />
+      </Principal>
+      <Dependent Role="SBForecastPlanAdjustments">
+        <PropertyRef Name="CompanyId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_SBForecastPlanAdjustments_CostCenters">
+    <End Role="CostCenters" Type="DisneyHCMLatamPlanningDevModel.Store.CostCenters" Multiplicity="0..1" />
+    <End Role="SBForecastPlanAdjustments" Type="DisneyHCMLatamPlanningDevModel.Store.SBForecastPlanAdjustments" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="CostCenters">
+        <PropertyRef Name="CostCenterID" />
+      </Principal>
+      <Dependent Role="SBForecastPlanAdjustments">
+        <PropertyRef Name="CostCenterId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_SBForecastPlanAdjustments_ExpenseTypes">
+    <End Role="ExpenseTypes" Type="DisneyHCMLatamPlanningDevModel.Store.ExpenseTypes" Multiplicity="1" />
+    <End Role="SBForecastPlanAdjustments" Type="DisneyHCMLatamPlanningDevModel.Store.SBForecastPlanAdjustments" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ExpenseTypes">
+        <PropertyRef Name="ExpenseTypeId" />
+      </Principal>
+      <Dependent Role="SBForecastPlanAdjustments">
+        <PropertyRef Name="ExpenseTypeId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_SBForecastPlanAdjustments_GLAccounts">
+    <End Role="GLAccounts" Type="DisneyHCMLatamPlanningDevModel.Store.GLAccounts" Multiplicity="1" />
+    <End Role="SBForecastPlanAdjustments" Type="DisneyHCMLatamPlanningDevModel.Store.SBForecastPlanAdjustments" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="GLAccounts">
+        <PropertyRef Name="GLAccountId" />
+      </Principal>
+      <Dependent Role="SBForecastPlanAdjustments">
+        <PropertyRef Name="GLAccountID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_SBForecastPlanAdjustments_HCTypes">
+    <End Role="HCTypes" Type="DisneyHCMLatamPlanningDevModel.Store.HCTypes" Multiplicity="1" />
+    <End Role="SBForecastPlanAdjustments" Type="DisneyHCMLatamPlanningDevModel.Store.SBForecastPlanAdjustments" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="HCTypes">
+        <PropertyRef Name="HCTypeID" />
+      </Principal>
+      <Dependent Role="SBForecastPlanAdjustments">
+        <PropertyRef Name="HCTypeId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_SBForecastPlanAdjustments_Lobs">
+    <End Role="Lobs" Type="DisneyHCMLatamPlanningDevModel.Store.Lobs" Multiplicity="1" />
+    <End Role="SBForecastPlanAdjustments" Type="DisneyHCMLatamPlanningDevModel.Store.SBForecastPlanAdjustments" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Lobs">
+        <PropertyRef Name="LobID" />
+      </Principal>
+      <Dependent Role="SBForecastPlanAdjustments">
+        <PropertyRef Name="LobId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_SBForecastPlanAdjustments_Lobs1">
+    <End Role="Lobs" Type="DisneyHCMLatamPlanningDevModel.Store.Lobs" Multiplicity="1" />
+    <End Role="SBForecastPlanAdjustments" Type="DisneyHCMLatamPlanningDevModel.Store.SBForecastPlanAdjustments" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Lobs">
+        <PropertyRef Name="LobID" />
+      </Principal>
+      <Dependent Role="SBForecastPlanAdjustments">
+        <PropertyRef Name="LobId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_SBForecastPlanAdjustments_SBForecastPlans">
+    <End Role="SBForecastPlans" Type="DisneyHCMLatamPlanningDevModel.Store.SBForecastPlans" Multiplicity="1" />
+    <End Role="SBForecastPlanAdjustments" Type="DisneyHCMLatamPlanningDevModel.Store.SBForecastPlanAdjustments" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="SBForecastPlans">
+        <PropertyRef Name="SBForecastPlanId" />
+      </Principal>
+      <Dependent Role="SBForecastPlanAdjustments">
+        <PropertyRef Name="SBForecastPlanId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_SBForecastPlanData_ParameterDataType">
+    <End Role="ParameterDataTypes" Type="DisneyHCMLatamPlanningDevModel.Store.ParameterDataTypes" Multiplicity="1" />
+    <End Role="SBForecastPlanData" Type="DisneyHCMLatamPlanningDevModel.Store.SBForecastPlanData" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ParameterDataTypes">
+        <PropertyRef Name="ParameterDataTypeID" />
+      </Principal>
+      <Dependent Role="SBForecastPlanData">
+        <PropertyRef Name="ParameterDataTypeID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_SBForecastPlanData_SBForecastPlanPositions">
+    <End Role="SBForecastPlanPositions" Type="DisneyHCMLatamPlanningDevModel.Store.SBForecastPlanPositions" Multiplicity="1" />
+    <End Role="SBForecastPlanData" Type="DisneyHCMLatamPlanningDevModel.Store.SBForecastPlanData" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="SBForecastPlanPositions">
+        <PropertyRef Name="SBForecastPlanPositionId" />
+      </Principal>
+      <Dependent Role="SBForecastPlanData">
+        <PropertyRef Name="SBForecastPlanPositionId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_SBForecastPlanModifiedGlobals_Parameters">
+    <End Role="Parameters" Type="DisneyHCMLatamPlanningDevModel.Store.Parameters" Multiplicity="1" />
+    <End Role="SBForecastPlanModifiedGlobals" Type="DisneyHCMLatamPlanningDevModel.Store.SBForecastPlanModifiedGlobals" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Parameters">
+        <PropertyRef Name="ParameterId" />
+      </Principal>
+      <Dependent Role="SBForecastPlanModifiedGlobals">
+        <PropertyRef Name="ParameterId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_SBForecastPlanModifiedGlobals_SBForecastPlans">
+    <End Role="SBForecastPlans" Type="DisneyHCMLatamPlanningDevModel.Store.SBForecastPlans" Multiplicity="1" />
+    <End Role="SBForecastPlanModifiedGlobals" Type="DisneyHCMLatamPlanningDevModel.Store.SBForecastPlanModifiedGlobals" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="SBForecastPlans">
+        <PropertyRef Name="SBForecastPlanId" />
+      </Principal>
+      <Dependent Role="SBForecastPlanModifiedGlobals">
+        <PropertyRef Name="SBForecastPlanId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_SBForecastPlanPositions_EmployeeLogs">
+    <End Role="EmployeeLogs" Type="DisneyHCMLatamPlanningDevModel.Store.EmployeeLogs" Multiplicity="0..1" />
+    <End Role="SBForecastPlanPositions" Type="DisneyHCMLatamPlanningDevModel.Store.SBForecastPlanPositions" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="EmployeeLogs">
+        <PropertyRef Name="EmployeeLogID" />
+      </Principal>
+      <Dependent Role="SBForecastPlanPositions">
+        <PropertyRef Name="EmployeeLogId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_SBForecastPlanPositions_HCPositionLogs">
+    <End Role="HCPositionLogs" Type="DisneyHCMLatamPlanningDevModel.Store.HCPositionLogs" Multiplicity="1" />
+    <End Role="SBForecastPlanPositions" Type="DisneyHCMLatamPlanningDevModel.Store.SBForecastPlanPositions" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="HCPositionLogs">
+        <PropertyRef Name="HCPositionLogID" />
+      </Principal>
+      <Dependent Role="SBForecastPlanPositions">
+        <PropertyRef Name="HCPositionLogId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_SBForecastPlanPositions_SBForecastPlans">
+    <End Role="SBForecastPlans" Type="DisneyHCMLatamPlanningDevModel.Store.SBForecastPlans" Multiplicity="1" />
+    <End Role="SBForecastPlanPositions" Type="DisneyHCMLatamPlanningDevModel.Store.SBForecastPlanPositions" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="SBForecastPlans">
+        <PropertyRef Name="SBForecastPlanId" />
+      </Principal>
+      <Dependent Role="SBForecastPlanPositions">
+        <PropertyRef Name="SBForecastPlanId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_SBForecastPlans_FiscalYears">
+    <End Role="FiscalYears" Type="DisneyHCMLatamPlanningDevModel.Store.FiscalYears" Multiplicity="1" />
+    <End Role="SBForecastPlans" Type="DisneyHCMLatamPlanningDevModel.Store.SBForecastPlans" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="FiscalYears">
+        <PropertyRef Name="FiscalYearID" />
+      </Principal>
+      <Dependent Role="SBForecastPlans">
+        <PropertyRef Name="FiscalYearId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_SBForecastPlans_SBForecastPlanStatuses">
+    <End Role="SBForecastPlanStatuses" Type="DisneyHCMLatamPlanningDevModel.Store.SBForecastPlanStatuses" Multiplicity="1" />
+    <End Role="SBForecastPlans" Type="DisneyHCMLatamPlanningDevModel.Store.SBForecastPlans" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="SBForecastPlanStatuses">
+        <PropertyRef Name="SBForecastPlanStatusID" />
+      </Principal>
+      <Dependent Role="SBForecastPlans">
+        <PropertyRef Name="SBForecastPlanStatusId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Schemes_Companies">
+    <End Role="Companies" Type="DisneyHCMLatamPlanningDevModel.Store.Companies" Multiplicity="1" />
+    <End Role="Schemes" Type="DisneyHCMLatamPlanningDevModel.Store.Schemes" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Companies">
+        <PropertyRef Name="CompanyID" />
+      </Principal>
+      <Dependent Role="Schemes">
+        <PropertyRef Name="CompanyId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Schemes_HCTypes">
+    <End Role="HCTypes" Type="DisneyHCMLatamPlanningDevModel.Store.HCTypes" Multiplicity="1" />
+    <End Role="Schemes" Type="DisneyHCMLatamPlanningDevModel.Store.Schemes" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="HCTypes">
+        <PropertyRef Name="HCTypeID" />
+      </Principal>
+      <Dependent Role="Schemes">
+        <PropertyRef Name="HCTypeId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Function Name="AddCurrentPositionsToSBForecastPlan" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="PlanId" Type="int" Mode="In" />
+  </Function>
+</Schema>

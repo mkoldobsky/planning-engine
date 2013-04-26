@@ -1,0 +1,10 @@
+C:\Projects\Spikes\RuleEngine\Engine\Engine\obj\Debug\ResolveAssemblyReference.cache
+C:\Projects\Spikes\RuleEngine\Engine\Engine\bin\Debug\Engine.dll
+C:\Projects\Spikes\RuleEngine\Engine\Engine\bin\Debug\Engine.pdb
+C:\Projects\Spikes\RuleEngine\Engine\Engine\obj\Debug\Engine.dll
+C:\Projects\Spikes\RuleEngine\Engine\Engine\obj\Debug\Engine.pdb
+C:\Projects\hcmsbplanning\spikes\RuleEngine\Engine\Engine\bin\Debug\Engine.dll
+C:\Projects\hcmsbplanning\spikes\RuleEngine\Engine\Engine\bin\Debug\Engine.pdb
+C:\Projects\hcmsbplanning\spikes\RuleEngine\Engine\Engine\obj\Debug\ResolveAssemblyReference.cache
+C:\Projects\hcmsbplanning\spikes\RuleEngine\Engine\Engine\obj\Debug\Engine.dll
+C:\Projects\hcmsbplanning\spikes\RuleEngine\Engine\Engine\obj\Debug\Engine.pdb

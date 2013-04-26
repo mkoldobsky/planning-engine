@@ -1,0 +1,1476 @@
+﻿namespace Engine.DataAccess
+{
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using Disney.HR.HCM.Contract;
+    using Engine.Core;
+    using Engine.Core.Interfaces;
+    using Engine.Core.Models;
+    using FromDisney;
+    using CompanyDto = FromDisney.CompanyDto;
+    using HCTypeDto = FromDisney.HCTypeDto;
+    using System.Configuration;
+
+    public class ForecastDataAccessService : IForecastDataAccessService
+    {
+        private ILog _log;
+
+        public ForecastDataAccessService()
+        {
+            _log = new EmptyLog();
+        }
+
+        public ForecastDataAccessService(ILog log)
+        {
+            _log = log;
+        }
+
+        public bool CreateForecastPlan(string name, string description, int fiscalYearId, string userName, int planFrom, int planTo)
+        {
+            using (var context = new DisneyHCMLatamPlanningEntities())
+            {
+                var fiscalYear = context.FiscalYears.FirstOrDefault(x => x.FiscalYearID == fiscalYearId);
+                var forecastPlan = new SBForecastPlan
+                                       {
+                                           Name = name,
+                                           Description = description,
+                                           CreationDate = DateTime.Today,
+                                           UserName = userName,
+                                           SBForecastPlanStatusId = (int)ForecastPlanStatus.Creating,
+                                           FiscalYear = fiscalYear,
+                                           MonthFrom = planFrom,
+                                           MonthTo = planTo,
+                                       };
+                context.AddToSBForecastPlans(forecastPlan);
+                context.SaveChanges();
+                context.AddCurrentPositionsToSBForecastPlan(forecastPlan.SBForecastPlanId);
+                return true;
+            }
+            return false;
+        }
+
+        public IForecastPlan GetPlan(int id)
+        {
+            using (var context = new DisneyHCMLatamPlanningEntities())
+            {
+                var forecastPlan = context.SBForecastPlans.FirstOrDefault(x => x.SBForecastPlanId == id);
+                if (forecastPlan != null)
+                {
+                    return CreateForecastPlanFromDb(context, forecastPlan);
+                }
+            }
+            throw new Exception();
+        }
+
+        private IForecastPlan CreateForecastPlanFromDb(DisneyHCMLatamPlanningEntities context, SBForecastPlan forecastPlan)
+        {
+            ForecastPlan<decimal> result = CreateForecastPlan(context, forecastPlan);
+
+            foreach (var sbForecastPlanPosition in forecastPlan.SBForecastPlanPositions.ToList())
+            {
+                var hcPositionLog = sbForecastPlanPosition.HCPositionLog;
+                if (hcPositionLog != null)
+                {
+                    var position = new Position
+                                       {
+                                           Id = sbForecastPlanPosition.HCPositionLogId,
+                                           //AnnualSalary = hcPositionLog.AnnualSalary,
+                                           Company = hcPositionLog.Company != null
+                                                         ? new CompanyDto { Code = hcPositionLog.Company.Code }
+                                                         : new CompanyDto(),
+                                           HCType = hcPositionLog.HCType != null
+                                                        ? new HCTypeDto { Code = hcPositionLog.HCType.Code }
+                                                        : new HCTypeDto(),
+                                           Status = (HCPositionStatus)hcPositionLog.HCStatusID
+                                       };
+                    result.AddPosition(position);
+                }
+            }
+
+            return result;
+        }
+
+        private ForecastPlan<decimal> CreateForecastPlan(DisneyHCMLatamPlanningEntities context, SBForecastPlan forecastPlan)
+        {
+            var result = new ForecastPlan<decimal>();
+            result.Id = forecastPlan.SBForecastPlanId;
+            result.Title = forecastPlan.Name;
+            result.Description = forecastPlan.Description;
+            result.Status = (ForecastPlanStatus)forecastPlan.SBForecastPlanStatusId;
+            result.CreationDate = forecastPlan.CreationDate;
+            result.ExecutionDate = forecastPlan.ExecutionDate;
+            result.CreationUserName = forecastPlan.UserName;
+            var employee = context.Employees.FirstOrDefault(x => x.UserName == forecastPlan.UserName);
+            result.CreationUserName = employee != null ? employee.FullName : string.Empty;
+
+            result.FiscalYearId = forecastPlan.FiscalYearId;
+            result.FiscalYearCode = forecastPlan.FiscalYear.Code;
+            result.From = forecastPlan.MonthFrom;
+            result.To = forecastPlan.MonthTo;
+            return result;
+        }
+
+        public Scheme<decimal> GetSchemeById(int schemeId)
+        {
+            using (var context = new DisneyHCMLatamPlanningEntities())
+            {
+                var scheme = context.Schemes.Include("SchemeConcepts").FirstOrDefault(
+                            x => x.SchemeId == schemeId);
+                if (scheme != null)
+                {
+                    return new Scheme<decimal>
+                    {
+                        Id = scheme.SchemeId,
+                        HCType = new Engine.Core.HCType
+                        {
+                            ADMWAccountID = scheme.HCType.ADMWAccountID,
+                            ADMWAccountType = scheme.HCType.ADMWAccountType,
+                            Id = scheme.HCType.HCTypeID,
+                            Code = scheme.HCType.Code,
+                            IsAdjust = scheme.HCType.IsAdjust,
+                            IsTemporal = scheme.HCType.IsAdjust
+                        },
+                        Company = new Engine.Core.Company
+                        {
+                            Code = scheme.Company.Code,
+                            Description = scheme.Company.Description,
+                            Id = scheme.Company.CompanyID,
+                            IsActive = scheme.Company.IsActive,
+                            Territory = scheme.Company.TerritoryID.ToString()
+                        },
+                        CompanyCode = scheme.Company.Description,
+                        CreatedBy = scheme.UserName,
+                        CreationDate = scheme.CreationDate,
+                        ModifiedUserName = scheme.ModifiedUserName,
+                        ModificationDate = scheme.ModificationDate
+                    };
+                }
+            }
+            _log.LogError(schemeId, string.Format("There is no scheme for SchemeId {0}", schemeId));
+            return null;
+        }
+
+        public Scheme<decimal> GetScheme(int planId, int fiscalYear, int? monthFrom, int? monthTo, int positionId, string hCTypeCode, string companyCode)
+        {
+            using (var context = new DisneyHCMLatamPlanningEntities())
+            {
+                var hcType = context.HCTypes.FirstOrDefault(x => x.Code == hCTypeCode);
+                var company = context.Companies.FirstOrDefault(x => x.Code == companyCode);
+                if (hcType != null && company != null)
+                {
+
+                    var scheme =
+                        context.Schemes.Include("SchemeConcepts").FirstOrDefault(
+                            x => x.HCTypeId == hcType.HCTypeID && x.CompanyId == company.CompanyID);
+                    if (scheme != null)
+                        return CreateSchemeFromDb(context, planId, fiscalYear, monthFrom, monthTo, positionId, scheme);
+                }
+            }
+            _log.LogError(planId, string.Format("There is no scheme for HcTypeCode {0} CompanyCode {1}", hCTypeCode, companyCode));
+            return null;
+        }
+
+        private Scheme<decimal> CreateSchemeFromDb(DisneyHCMLatamPlanningEntities context, int planId, int fiscalYear, int? monthFrom, int? monthTo, int positionId, Scheme scheme)
+        {
+            var result = new Scheme<decimal> { HCTypeCode = scheme.HCType.Code, CompanyCode = scheme.Company.Code, Id = scheme.SchemeId };
+            foreach (var schemeConcept in scheme.SchemeConcepts.OrderBy(x => x.Concept.Sequence).ToList())
+            {
+                result.AddConcept(CreateConceptFromDB(context, planId, fiscalYear, monthFrom, monthTo, positionId, schemeConcept.Concept));
+            }
+            return result;
+
+        }
+
+        private IConcept CreateConceptFromDB(DisneyHCMLatamPlanningEntities context, int planId, int fiscalYear, int? monthFrom, int? monthTo, int positionId, Concept concept)
+        {
+            try
+            {
+                var result = new Concept<decimal>(concept.Operation)
+                {
+                    Title = concept.Title,
+                    From = monthFrom,
+                    To = monthTo,
+                    Description = concept.Description,
+                    Id = concept.ConceptId,
+                    Sequence = concept.Sequence,
+                    GLAccountId = concept.GLAccountID
+                };
+
+                result.Filters = CreateFiltersFromDB(context, planId, fiscalYear, monthFrom, monthTo, positionId, concept.ConceptFilters);
+
+                var parameters = new List<IMonthlyParameter<decimal>>();
+                result.Parameter1 = CreateParameterFromDB(context, planId, fiscalYear, monthFrom, monthTo, positionId, concept.Parameter1, null);
+                if (result.Parameter1 != null)
+                    parameters.Add(result.Parameter1);
+                result.Parameter2 = CreateParameterFromDB(context, planId, fiscalYear, monthFrom, monthTo, positionId, concept.Parameter2, null);
+                if (result.Parameter2 != null)
+                    parameters.Add(result.Parameter2);
+                result.Parameter3 = CreateParameterFromDB(context, planId, fiscalYear, monthFrom, monthTo, positionId, concept.Parameter3, null);
+                if (result.Parameter3 != null)
+                    parameters.Add(result.Parameter3);
+                result.Parameter4 = CreateParameterFromDB(context, planId, fiscalYear, monthFrom, monthTo, positionId, concept.Parameter4, null);
+                if (result.Parameter4 != null)
+                    parameters.Add(result.Parameter4);
+                result.SetParameters(parameters);
+                if (concept.Output1 != null)
+                    result.AddOutputParameter1(CreateParameterFromDB(context, planId, fiscalYear, monthFrom, monthTo, positionId, concept.Output1, null));
+                if (concept.Output2 != null)
+                    result.AddOutputParameter2(CreateParameterFromDB(context, planId, fiscalYear, monthFrom, monthTo, positionId, concept.Output2, null));
+
+
+                return result;
+
+            }
+            catch (Exception ex)
+            {
+                _log.LogError(planId, ex.Message);
+            }
+            return null;
+        }
+
+        private List<IFIlter<bool>> CreateFiltersFromDB(DisneyHCMLatamPlanningEntities context, int planId, int fiscalYearId, int? monthFrom, int? monthTo, int positionId, System.Data.Objects.DataClasses.EntityCollection<ConceptFilter> conceptFilters)
+        {
+            var result = new List<IFIlter<bool>>();
+
+            foreach (var conceptFilter in conceptFilters.ToList())
+            {
+                var filter = conceptFilter.Filter;
+                IMonthlyParameter<decimal> parameter1 = null, parameter2 = null;
+                if (filter.Parameter != null)
+                    parameter1 = CreateParameterFromDB(context, planId, fiscalYearId, monthFrom, monthTo, positionId,
+                                                      filter.Parameter, filter.FilterTypeId);
+                if (filter.Parameter1 != null)
+                    parameter2 = CreateParameterFromDB(context, planId, fiscalYearId, monthFrom, monthTo, positionId,
+                                                      filter.Parameter1, filter.FilterTypeId);
+
+                if (parameter1 != null && parameter2 != null)
+                {
+                    result.Add(new Core.Filter<decimal, bool>
+                                   {
+                                       Sequence = conceptFilter.Sequence,
+                                       Operation = new Operation(filter.Operation),
+                                       Connector = conceptFilter.Connector != null ? new Operation(conceptFilter.Connector) : null,
+                                       Id = filter.FilterId,
+                                       I = parameter1,
+                                       J = parameter2,
+                                       FilterType = filter.FilterTypeId
+                                   });
+                }
+            }
+            return result;
+        }
+
+        private IMonthlyParameter<decimal> CreateParameterFromDB(DisneyHCMLatamPlanningEntities context, int planId, int fiscalYearId, int? monthFrom, int? monthTo, int positionId, Parameter parameter, int? filterType)
+        {
+            IMonthlyParameter<decimal> result = null;
+            if (parameter != null)
+            {
+                switch (parameter.ParameterType.ParameterTypeId)
+                {
+                    case (int)FromDisney.ParameterType.FixedValue:
+                        result = new MonthlyParameter<decimal>
+                        {
+                            Name = parameter.Name,
+                            Id = parameter.ParameterId,
+                            IsAccumulator = parameter.IsAccumulator,
+                        };
+                        decimal value;
+                        if (!Decimal.TryParse(parameter.FixedValue, out value))
+                            value = 0;
+                        result.Value = SetDictionaryFromValue(value);
+                        break;
+                    case (int)FromDisney.ParameterType.Dynamic:
+                        result = new MonthlyParameter<decimal>
+                                     {
+                                         Name = parameter.Name,
+                                         Id = parameter.ParameterId,
+                                         IsAccumulator = parameter.IsAccumulator,
+                                         Value = SetDictionaryFromValue(0)
+                                     };
+                        break;
+                    case (int)FromDisney.ParameterType.Constant:
+                        List<ModifiedGlobalsMonthValue> modifiedGlobal = null;
+                        if (parameter.IsModifiable)
+                        {
+                            var globalValues =
+                                context.SBForecastPlanModifiedGlobals.FirstOrDefault(
+                                    x => x.SBForecastPlanId == planId && x.ParameterId == parameter.ParameterId);
+                            if (globalValues != null)
+                                modifiedGlobal = globalValues.ModifiedGlobalsMonthValues.ToList();
+
+                        }
+                        result = new Global<decimal>
+                                     {
+                                         Name = parameter.Name,
+                                         Id = parameter.ParameterId,
+                                         IsAccumulator = parameter.IsAccumulator,
+                                         IsConstant = parameter.IsConstant,
+                                         IsModifiable = parameter.IsModifiable,
+                                         Value =
+                                             modifiedGlobal == null
+                                                 ? AssignValue(parameter.ParameterValues.FirstOrDefault(x => x.FiscalYearID == fiscalYearId), monthFrom, monthTo)
+                                                 : SetDictionaryFromModifiedValues(modifiedGlobal)
+                                     };
+                        break;
+                    case (int)FromDisney.ParameterType.Function:
+                        result = new Function<decimal>
+                                     {
+                                         Name = parameter.Name,
+                                         Id = parameter.ParameterId,
+                                         IsAccumulator = parameter.IsAccumulator,
+                                         ColumnName = parameter.ColumnName,
+                                         TableName = parameter.TableName,
+                                     };
+                        if (parameter.ParameterDataType != null)
+                        {
+                            result.Value = GetMonthlyDataValue(context, planId, fiscalYearId, positionId, parameter);
+                        }
+                        else
+                        {
+                            result.Value =
+                                GetMonthlyFunctionValue(context, positionId, parameter.TableName,
+                                                        parameter.ColumnName, filterType);
+
+                        }
+                        break;
+                }
+
+                return result;
+            }
+            return null;
+        }
+
+        private Dictionary<Month, decimal> SetDictionaryFromModifiedValues(List<ModifiedGlobalsMonthValue> modifiedGlobals)
+        {
+            Dictionary<Month, decimal> result = null;
+            var global = modifiedGlobals.FirstOrDefault(x => x.Month == 1);
+            result[Month.January] = global == null ? 0 : global.Value;
+            global = modifiedGlobals.FirstOrDefault(x => x.Month == 2);
+            result[Month.February] = global == null ? 0 : global.Value;
+            global = modifiedGlobals.FirstOrDefault(x => x.Month == 3);
+            result[Month.March] = global == null ? 0 : global.Value;
+            global = modifiedGlobals.FirstOrDefault(x => x.Month == 4);
+            result[Month.April] = global == null ? 0 : global.Value;
+            global = modifiedGlobals.FirstOrDefault(x => x.Month == 5);
+            result[Month.May] = global == null ? 0 : global.Value;
+            global = modifiedGlobals.FirstOrDefault(x => x.Month == 6);
+            result[Month.June] = global == null ? 0 : global.Value;
+            global = modifiedGlobals.FirstOrDefault(x => x.Month == 7);
+            result[Month.July] = global == null ? 0 : global.Value;
+            global = modifiedGlobals.FirstOrDefault(x => x.Month == 8);
+            result[Month.August] = global == null ? 0 : global.Value;
+            global = modifiedGlobals.FirstOrDefault(x => x.Month == 9);
+            result[Month.September] = global == null ? 0 : global.Value;
+            global = modifiedGlobals.FirstOrDefault(x => x.Month == 10);
+            result[Month.October] = global == null ? 0 : global.Value;
+            global = modifiedGlobals.FirstOrDefault(x => x.Month == 11);
+            result[Month.November] = global == null ? 0 : global.Value;
+            global = modifiedGlobals.FirstOrDefault(x => x.Month == 12);
+            result[Month.December] = global == null ? 0 : global.Value;
+            return result;
+
+        }
+
+        private Dictionary<Month, decimal> GetMonthlyDataValue(DisneyHCMLatamPlanningEntities context, int planId, int fiscalYear, int positionId, Parameter parameter)
+        {
+            var parameterDataType = parameter.ParameterDataType;
+            if (!parameterDataType.IsActive)
+            {
+                _log.LogError(planId, string.Format("ParameterDataType {0} inactive", parameterDataType.Name));
+                return null;
+            }
+            var planPosition =
+                context.SBForecastPlanPositions.FirstOrDefault(
+                    x => x.HCPositionLogId == positionId && x.SBForecastPlanId == planId);
+            if (planPosition != null)
+            {
+                var planData =
+                    parameterDataType.SBForecastPlanDatas.Where(
+                        x =>
+                        x.SBForecastPlanPositionId == planPosition.SBForecastPlanPositionId &&
+                        x.SBForecastPlanPosition.SBForecastPlan.SBForecastPlanId == planId).ToList();
+                if (planData.Count == 0)
+                {
+                    _log.LogWarning(planId,
+                                    string.Format(
+                                        "ParameterDataType {0} active but not related to positionLogId {1} and SBForecastPlanId {2}",
+                                        parameterDataType.Name, positionId, planId));
+                    return null;
+                }
+                return SetDictionaryFromPlanData(planData, fiscalYear);
+            }
+            _log.LogWarning(planId,
+                            string.Format(
+                                "ParameterDataType {0} active but not related to positionLogId {1} and SBForecastPlanId {2}",
+                                parameterDataType.Name, positionId, planId));
+            return null;
+
+        }
+
+        private static Dictionary<Month, decimal> SetDictionaryFromPlanData(List<SBForecastPlanData> planData, int fiscalYear)
+        {
+            var result = new Dictionary<Month, decimal>();
+            foreach (Month month in Enum.GetValues(typeof(Month)))
+            {
+                var data = planData.FirstOrDefault(x => x.Month == (int)month);
+                if (data != null)
+                    result[month] = data.Value;
+            }
+            return result;
+        }
+
+        public static Dictionary<Month, decimal> SetDictionaryFromValue(decimal value)
+        {
+            var result = new Dictionary<Month, decimal>();
+            result[Month.January] = value;
+            result[Month.February] = value;
+            result[Month.March] = value;
+            result[Month.April] = value;
+            result[Month.May] = value;
+            result[Month.June] = value;
+            result[Month.July] = value;
+            result[Month.August] = value;
+            result[Month.September] = value;
+            result[Month.October] = value;
+            result[Month.November] = value;
+            result[Month.December] = value;
+            return result;
+        }
+
+        private Dictionary<Month, decimal> GetMonthlyFunctionValue(DisneyHCMLatamPlanningEntities context, int positionId, string tableName, string columnName, int? filterType)
+        {
+            var query = "select [{0}] from [{1}] where HCPositionLogId = {2}";
+            if (columnName == "AnnualSalary")
+            {
+                query = "select CONVERT (varchar(50),DECRYPTBYPASSPHRASE('{0}', AnnualSalary)) from [{1}] where HCPositionLogId = {2}";
+                var result = context.ExecuteStoreQuery<string>(
+                    string.Format(query, ConfigurationManager.AppSettings["SQLPassPhrase"], tableName, positionId), null).FirstOrDefault();
+                return SetDictionaryFromValue(Convert.ToDecimal(result));
+            }
+
+            decimal? value = null;
+            if (filterType == null)
+            {
+                var result = context.ExecuteStoreQuery<decimal?>(
+                    string.Format(query, columnName, tableName, positionId), null).FirstOrDefault();
+                if (!result.HasValue)
+                    result = 0;
+                return SetDictionaryFromValue(result.Value);
+            }
+            switch (filterType)
+            {
+                case (int)FilterTypes.Integer:
+                    var it = context.ExecuteStoreQuery<int?>(string.Format(query, columnName, tableName, positionId), null).FirstOrDefault();
+                    if (!it.HasValue)
+                        it = 0;
+                    return SetDictionaryFromValue(Convert.ToDecimal(it.Value));
+                    break;
+                case (int)FilterTypes.Byte:
+                    var bt = context.ExecuteStoreQuery<byte?>(
+                        string.Format(query, columnName, tableName, positionId), null).FirstOrDefault();
+                    if (!bt.HasValue)
+                        bt = 0;
+
+                    return SetDictionaryFromValue(Convert.ToDecimal(bt.Value));
+                    break;
+                case (int)FilterTypes.Decimal:
+                    var dc = context.ExecuteStoreQuery<decimal?>(
+                        string.Format(query, columnName, tableName, positionId), null).FirstOrDefault();
+                    if (!dc.HasValue)
+                        dc = 0;
+
+                    return SetDictionaryFromValue(Convert.ToDecimal(dc.Value));
+                    break;
+                case (int)FilterTypes.Bit:
+                    var bit = context.ExecuteStoreQuery<bool?>(
+                        string.Format(query, columnName, tableName, positionId), null).FirstOrDefault();
+                    if (!bit.HasValue)
+                        bit = false;
+
+                    return SetDictionaryFromValue(bit.Value ? 1 : 0);
+                    break;
+                default:
+                    return null;
+            }
+        }
+
+        private Dictionary<Month, decimal> AssignValue(ParameterValue parameterValue, int? monthFrom, int? monthTo)
+        {
+
+            var result = new Dictionary<Month, decimal>();
+            if (parameterValue == null)
+                return result;
+            var value = parameterValue.ParameterMonthValues.FirstOrDefault(x => x.Month == (int)Month.January);
+            if (value != null)
+                result[Month.January] = value.Value;
+            value = parameterValue.ParameterMonthValues.FirstOrDefault(x => x.Month == (int)Month.February);
+            if (value != null)
+                result[Month.February] = value.Value;
+            value = parameterValue.ParameterMonthValues.FirstOrDefault(x => x.Month == (int)Month.March);
+            if (value != null)
+                result[Month.March] = value.Value;
+            value = parameterValue.ParameterMonthValues.FirstOrDefault(x => x.Month == (int)Month.April);
+            if (value != null)
+                result[Month.April] = value.Value;
+            value = parameterValue.ParameterMonthValues.FirstOrDefault(x => x.Month == (int)Month.May);
+            if (value != null)
+                result[Month.May] = value.Value;
+            value = parameterValue.ParameterMonthValues.FirstOrDefault(x => x.Month == (int)Month.June);
+            if (value != null)
+                result[Month.June] = value.Value;
+            value = parameterValue.ParameterMonthValues.FirstOrDefault(x => x.Month == (int)Month.July);
+            if (value != null)
+                result[Month.July] = value.Value;
+            value = parameterValue.ParameterMonthValues.FirstOrDefault(x => x.Month == (int)Month.August);
+            if (value != null)
+                result[Month.August] = value.Value;
+            value = parameterValue.ParameterMonthValues.FirstOrDefault(x => x.Month == (int)Month.September);
+            if (value != null)
+                result[Month.September] = value.Value;
+            value = parameterValue.ParameterMonthValues.FirstOrDefault(x => x.Month == (int)Month.October);
+            if (value != null)
+                result[Month.October] = value.Value;
+            value = parameterValue.ParameterMonthValues.FirstOrDefault(x => x.Month == (int)Month.November);
+            if (value != null)
+                result[Month.November] = value.Value;
+            value = parameterValue.ParameterMonthValues.FirstOrDefault(x => x.Month == (int)Month.December);
+            if (value != null)
+                result[Month.December] = value.Value;
+            return result;
+        }
+
+        public bool DeletePlan(int id)
+        {
+            using (var context = new DisneyHCMLatamPlanningEntities())
+            {
+                var plan = context.SBForecastPlans
+                    .Include("SBForecastPlanPositions")
+                    .Include("SBForecastPlanAdjustments")
+                    .Include("SBForecastPlanModifiedGlobals")
+                    .FirstOrDefault(x => x.SBForecastPlanId == id);
+                if (plan != null)
+                {
+                    foreach (var sbForecastPlanAdjustment in plan.SBForecastPlanAdjustments.ToList())
+                    {
+                        context.DeleteObject(sbForecastPlanAdjustment);
+                    }
+                    foreach (var sbForecastPlanModifiedGlobal in plan.SBForecastPlanModifiedGlobals.ToList())
+                    {
+                        context.DeleteObject(sbForecastPlanModifiedGlobal);
+                    }
+                    foreach (var sbForecastPlanPosition in plan.SBForecastPlanPositions.ToList())
+                    {
+                        SBForecastPlanPosition position = sbForecastPlanPosition;
+                        var conceptResults =
+                            context.ConceptResults.Where(
+                                x => x.SBForecastPlanPositionId == position.SBForecastPlanPositionId);
+                        foreach (var conceptResult in conceptResults.ToList())
+                        {
+                            context.ConceptResults.DeleteObject(conceptResult);
+                        }
+                        foreach (var planData in position.SBForecastPlanDatas.ToList())
+                        {
+                            context.SBForecastPlanDatas.DeleteObject(planData);
+                        }
+                        context.DeleteObject(sbForecastPlanPosition);
+                    }
+                    context.DeleteObject(plan);
+                    context.SaveChanges();
+                }
+                return true;
+            }
+        }
+
+        public bool CopyPlan(int id, string newName, string userName)
+        {
+            using (var context = new DisneyHCMLatamPlanningEntities())
+            {
+                try
+                {
+                    var plan = context.SBForecastPlans.FirstOrDefault(x => x.SBForecastPlanId == id);
+                    if (plan == null)
+                        return false;
+                    var newPlan = new SBForecastPlan
+                                      {
+                                          CreationDate = DateTime.Today,
+                                          Description = plan.Description + " - Copy",
+                                          ExecutionDate = null,
+                                          FiscalYear = plan.FiscalYear,
+                                          MonthFrom = plan.MonthFrom,
+                                          MonthTo = plan.MonthTo,
+                                          Name = plan.Name + " - Copy",
+                                          SBForecastPlanStatusId = (int)ForecastPlanStatus.Creating,
+                                          UserName = userName,
+                                      };
+                    this.CopyPlanPositions(plan, newPlan);
+                    this.CopyAdjustments(plan, newPlan);
+                    this.CopyModifiedGlobals(plan, newPlan);
+                    // do not copy results
+                    context.SBForecastPlans.AddObject(newPlan);
+                    context.SaveChanges();
+                    return true;
+                }
+                catch (Exception)
+                {
+
+                    return false;
+                }
+            }
+
+        }
+
+        private void CopyModifiedGlobals(SBForecastPlan plan, SBForecastPlan newPlan)
+        {
+            foreach (var modifiedGlobal in plan.SBForecastPlanModifiedGlobals)
+            {
+                modifiedGlobal.SBForecastPlan = null;
+                newPlan.SBForecastPlanModifiedGlobals.Add(modifiedGlobal);
+            }
+        }
+
+        private void CopyAdjustments(SBForecastPlan plan, SBForecastPlan newPlan)
+        {
+            foreach (var adjustment in plan.SBForecastPlanAdjustments)
+            {
+                adjustment.SBForecastPlan = null;
+                newPlan.SBForecastPlanAdjustments.Add(adjustment);
+            }
+        }
+
+        private void CopyPlanPositions(SBForecastPlan plan, SBForecastPlan newPlan)
+        {
+            foreach (var position in plan.SBForecastPlanPositions)
+            {
+                newPlan.SBForecastPlanPositions.Add(new SBForecastPlanPosition { HCPositionLog = position.HCPositionLog });
+            }
+        }
+
+        public Dictionary<Month, decimal> GetFunctionValuesByPlanAndPosition(int planId, int positionId, int functionId)
+        {
+            using (var context = new DisneyHCMLatamPlanningEntities())
+            {
+                var function = context.Parameters.FirstOrDefault(x => x.ParameterId == functionId);
+                if (function != null)
+                {
+                    var result = context.ExecuteStoreQuery<Decimal>(
+                        string.Format("select [{0}] from [{1}] where HCPositionLogId = {2}", function.ColumnName,
+                                      function.TableName, positionId), null).FirstOrDefault();
+                    return SetDictionaryFromValue(result);
+                }
+            }
+            return null;
+        }
+
+        public void CreateResults(int planId, int positionLogId, List<IConcept> concepts)
+        {
+            using (var context = new DisneyHCMLatamPlanningEntities())
+            {
+                foreach (var concept in concepts)
+                {
+                    if (concept.ShouldSave())
+                    {
+                        try
+                        {
+                            var plan = context.SBForecastPlans.FirstOrDefault(x => x.SBForecastPlanId == planId);
+                            var positionLog = context.HCPositionLogs.FirstOrDefault(x => x.HCPositionLogID == positionLogId);
+                            var planPosition =
+                                context.SBForecastPlanPositions.FirstOrDefault(
+                                    x => x.SBForecastPlanId == planId && x.HCPositionLogId == positionLogId);
+                            IConcept concept1 = concept;
+                            var conceptOriginal = context.Concepts.FirstOrDefault(x => x.ConceptId == concept1.Id);
+                            //SaveParameters(planId, concept1, " post run ");
+                            foreach (Month month in Enum.GetValues(typeof(Month)))
+                            {
+                                if (conceptOriginal.ConceptsValidMonths.FirstOrDefault(x => x.MonthId == (int)month) != null && concept1.IsMonthFiltered(month))
+                                {
+                                    var value = ((Concept<decimal>)concept1).Output1.Value;
+                                    if (!value.ContainsKey(month))
+                                        continue;
+                                    if (value[month] != default(decimal))
+                                    {
+                                        var conceptResult = new ConceptResult
+                                                                {
+                                                                    SBForecastPlanPosition = planPosition,
+                                                                    Concept = conceptOriginal,
+                                                                    CalendarMonthId = (int)month,
+                                                                    Value =
+                                                                        ((Concept<decimal>)concept1).Output1.Value[
+                                                                            month],
+                                                                };
+
+                                        planPosition.ConceptResults.Add(conceptResult);
+                                    }
+                                }
+                            }
+                        }
+                        catch (Exception e)
+                        {
+                            _log.LogError(planId, e.Message);
+
+                            throw;
+                        }
+                    }
+                }
+                context.SaveChanges();
+            }
+        }
+
+        public bool DeleteResults(int planId)
+        {
+            using (var context = new DisneyHCMLatamPlanningEntities())
+            {
+                var planPositions = context.SBForecastPlanPositions.FirstOrDefault(x => x.SBForecastPlanId == planId);
+
+                if (planPositions != null)
+                {
+                    foreach (var conceptResult in planPositions.ConceptResults.ToList())
+                    {
+                        ConceptResult result = conceptResult;
+                        var resultParameters =
+                            context.ResultParameters.Where(
+                                x => x.ConceptResultId == result.ConceptResultId);
+                        foreach (var resultParameter in resultParameters.ToList())
+                        {
+                            context.ResultParameters.DeleteObject(resultParameter);
+                            context.ConceptResults.DeleteObject(conceptResult);
+                        }
+                        context.DeleteObject(conceptResult);
+                    }
+                    context.SaveChanges();
+                }
+                return true;
+            }
+
+        }
+
+        public bool PlanExist(string planName)
+        {
+            using (var context = new DisneyHCMLatamPlanningEntities())
+            {
+                return context.SBForecastPlans.FirstOrDefault(x => x.Name == planName) != null;
+            }
+        }
+
+        public IForecastPlan GetPlan(string name)
+        {
+            using (var context = new DisneyHCMLatamPlanningEntities())
+            {
+                var forecastPlan = context.SBForecastPlans.FirstOrDefault(x => x.Name == name);
+                if (forecastPlan != null)
+                {
+                    return CreateForecastPlanFromDb(context, forecastPlan);
+                }
+            }
+            throw new Exception();
+        }
+
+        public List<IForecastPlan> GetPlans()
+        {
+            using (var context = new DisneyHCMLatamPlanningEntities())
+            {
+                var result = new List<IForecastPlan>();
+                var plans = context.SBForecastPlans.ToList();
+                foreach (var sbForecastPlan in plans)
+                {
+                    result.Add(CreateForecastPlanFromDbWithoutPositions(context, sbForecastPlan));
+                }
+                return result;
+            }
+        }
+
+        public int CountCurrentOpenPositions()
+        {
+            using (var context = new DisneyHCMLatamPlanningEntities())
+            {
+                return context.HCPositions.Count(x => x.HCStatusID == (int)HCPositionStatus.Open);
+            }
+        }
+
+        public int CountCurrentActivePositions()
+        {
+            using (var context = new DisneyHCMLatamPlanningEntities())
+            {
+                return context.HCPositions.Count(x => x.HCStatusID == (int)HCPositionStatus.Active);
+            }
+        }
+
+        public int CountCurrentReadyToHirePositions()
+        {
+            using (var context = new DisneyHCMLatamPlanningEntities())
+            {
+                return context.HCPositions.Count(x => x.HCStatusID == (int)HCPositionStatus.ReadyToHire);
+            }
+        }
+
+        public int CountCurrentChangePendingPositions()
+        {
+            using (var context = new DisneyHCMLatamPlanningEntities())
+            {
+                return context.HCPositions.Count(x => x.HCStatusID == (int)HCPositionStatus.ChangePending);
+            }
+        }
+
+        public void UpdateForecastPlan(IForecastPlan plan)
+        {
+            using (var context = new DisneyHCMLatamPlanningEntities())
+            {
+                var forecastPlan = context.SBForecastPlans.FirstOrDefault(x => x.SBForecastPlanId == plan.Id);
+                if (forecastPlan == null) return;
+                var newStatusId = (int)plan.GetStatus();
+                var status = context.SBForecastPlanStatuses.FirstOrDefault(x => x.SBForecastPlanStatusID == newStatusId);
+                if (status != null)
+                    forecastPlan.SBForecastPlanStatus = status;
+                forecastPlan.Description = plan.Description;
+                forecastPlan.ExecutionDate = plan.ExecutionDate;
+                forecastPlan.UploadedFileName = plan.UploadedFileName;
+                _log.LogInfo(forecastPlan.SBForecastPlanId, string.Format("Plan updated -- new status {0}", forecastPlan.SBForecastPlanStatus.Description));
+                context.SaveChanges();
+            }
+        }
+
+        public List<IGlobal<decimal>> GetModifiableGlobals()
+        {
+            using (var context = new DisneyHCMLatamPlanningEntities())
+            {
+                var globals =
+                    context.Parameters.Where(x => x.ParameterTypeId == (int)FromDisney.ParameterType.Constant && x.IsModifiable
+                    || x.ParameterTypeId == (int)FromDisney.ParameterType.Dynamic && x.IsModifiable).ToList();
+
+                var list = new List<IGlobal<decimal>>();
+
+                globals.ForEach(x => list.Add(CreateGlobalsFromDb(x)));
+
+                return list;
+            }
+        }
+
+        public List<IGlobal<decimal>> GetModifiableGlobals(String fiscalYear)
+        {
+            using (var context = new DisneyHCMLatamPlanningEntities())
+            {
+                var globals =
+                    context.Parameters.Where(x => x.ParameterTypeId == (int)FromDisney.ParameterType.Constant && x.IsModifiable).ToList();
+
+                var list = new List<IGlobal<decimal>>();
+
+                globals.ForEach(x => list.Add(CreateGlobalsFromDb(x, fiscalYear)));
+
+                return list;
+            }
+        }
+
+        public void InsertDataTable(int planId, string[] lines)
+        {
+            using (var context = new DisneyHCMLatamPlanningEntities())
+            {
+                var plan = context.SBForecastPlans.FirstOrDefault(x => x.SBForecastPlanId == planId);
+                if (plan != null)
+                {
+                    foreach (var line in lines)
+                    {
+                        var tokens = line.Split(';');
+                        if (tokens.Count() == 14)
+                        {
+                            int positionId;
+                            if (int.TryParse(tokens[0], out positionId))
+                            {
+                                var planPosition =
+                                    plan.SBForecastPlanPositions.FirstOrDefault(
+                                        x => x.HCPositionLog.HCPositionID == positionId);
+                                _log.LogError(planId, "There are no positions to execute the forecast");
+                                if (planPosition != null)
+                                {
+                                    int parameterDataTypeId;
+                                    if (int.TryParse(tokens[1], out parameterDataTypeId))
+                                    {
+                                        var parameterDataType = context.ParameterDataTypes.FirstOrDefault(
+                                            x => x.ParameterDataTypeID == parameterDataTypeId);
+                                        for (int i = 1; i < 13; i++)
+                                        {
+                                            decimal value;
+                                            if (decimal.TryParse(tokens[i + 1], out value))
+                                            {
+                                                var planData = new SBForecastPlanData
+                                                                   {
+                                                                       ParameterDataType = parameterDataType,
+                                                                       Month = i,
+                                                                       Value = value,
+                                                                   };
+                                                planPosition.SBForecastPlanDatas.Add(planData);
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+                context.SaveChanges();
+            }
+        }
+
+        public void AddModifiedGlobalsToForecastPlan(int planId, List<IGlobal<decimal>> globals)
+        {
+            using (var context = new DisneyHCMLatamPlanningEntities())
+            {
+                var plan = context.SBForecastPlans.FirstOrDefault(x => x.SBForecastPlanId == planId);
+                if (plan != null)
+                {
+                    foreach (var global in globals.ToList())
+                    {
+                        IGlobal<decimal> global1 = global;
+                        var parameter = context.Parameters.FirstOrDefault(x => x.ParameterId == global1.Id);
+                        var modifiedGlobal = new SBForecastPlanModifiedGlobal { SBForecastPlan = plan, Parameter = parameter };
+                        foreach (Month month in Enum.GetValues(typeof(Month)))
+                        {
+                            modifiedGlobal.ModifiedGlobalsMonthValues.Add(new ModifiedGlobalsMonthValue { Month = (int)month, Value = global1.Value[month] });
+                        }
+
+                    }
+                    context.SaveChanges();
+                }
+            }
+        }
+
+        public string GetPlanName(int id)
+        {
+            using (var context = new DisneyHCMLatamPlanningEntities())
+            {
+                var plan = context.SBForecastPlans.FirstOrDefault(x => x.SBForecastPlanId == id);
+                return plan != null ? plan.Name : null;
+            }
+        }
+
+        public List<string> GetTableFields(string tableName)
+        {
+            using (var context = new DisneyHCMLatamPlanningEntities())
+            {
+                string query = "SELECT name FROM sys.columns WHERE object_id = OBJECT_ID('dbo." + tableName + "')";
+                var result = context.ExecuteStoreQuery<string>(
+                string.Format(query), null);
+                //string.Format("select [{0}] from [{1}] where HCPositionLogId = {2}", columnName, tableName, positionId), null).FirstOrDefault();
+                //string.Format("SELECT name FROM sys.columns WHERE object_id = OBJECT_ID('dbo.{0}')", tableName), null);
+                //string.Format("SELECT a.name,b.name FROM sys.columns a, sys.types b WHERE object_id = OBJECT_ID('dbo.{0}') and a.system_type_id = b.system_type_id", tableName), null);
+                return result.ToList();
+            }
+        }
+
+        public ILog GetLogger()
+        {
+            return _log;
+        }
+
+        public void CleanAccumulableParameters(List<IMonthlyParameter<decimal>> accumulableParameters)
+        {
+            using (var context = new DisneyHCMLatamPlanningEntities())
+            {
+                foreach (var accumulableParameter in accumulableParameters)
+                {
+                    IMonthlyParameter<decimal> parameter1 = accumulableParameter;
+                    var parameter = context.Parameters.FirstOrDefault(x => x.ParameterId == parameter1.Id);
+                    if (parameter != null)
+                    {
+                        foreach (var parameterValue in parameter.ParameterValues.ToList())
+                        {
+                            context.DeleteObject(parameterValue);
+                        }
+                    }
+                }
+                context.SaveChanges();
+            }
+        }
+
+        public void SaveInputParameters(int planId, IConcept concept)
+        {
+            //TODO implement SaveInputParameters
+            //SaveParameters(planId, concept, " pre run ");
+        }
+
+        private void SaveParameters(int planId, IConcept concept, string message)
+        {
+            using (var context = new DisneyHCMLatamPlanningEntities())
+            {
+                var parameters = concept.GetParameters();
+                foreach (IMonthlyParameter<decimal> parameter in parameters)
+                {
+                    foreach (Month month in Enum.GetValues(typeof(Month)))
+                    {
+                        if (parameter.Value != null && parameter.Value.ContainsKey(month))
+                            _log.LogInfo(planId, string.Format("Concept {0} - {1} - Input parameter {2} month {3} value {4}", concept.GetName(), message, parameter.Name, month, parameter.Value != null && parameter.Value.Count > 0 ? parameter.Value[month].ToString() : "no value"));
+                    }
+                }
+                parameters = concept.GetOutputParameters();
+                foreach (IMonthlyParameter<decimal> parameter in parameters)
+                {
+                    foreach (Month month in Enum.GetValues(typeof(Month)))
+                    {
+                        if (parameter.Value != null && parameter.Value.ContainsKey(month))
+                            _log.LogInfo(planId, string.Format("Concept {0} - pre run - Output parameter {1} month {2} value {3}", concept.GetName(), parameter.Name, month, parameter.Value != null && parameter.Value.Count > 0 ? parameter.Value[month].ToString() : "no value"));
+                    }
+                }
+            }
+        }
+
+        public void UpdateConceptWithCurrentFunctionValues(int planId, int fiscalYearId, int positionId, IConcept concept)
+        {
+            var parameters = concept.GetParameters();
+            foreach (var parameter in parameters)
+            {
+                var function = parameter as Function<decimal>;
+                if (function == null) continue;
+                using (var context = new DisneyHCMLatamPlanningEntities())
+                {
+                    var parameterFromDB = context.Parameters.FirstOrDefault(x => x.ParameterId == function.Id);
+                    if (parameterFromDB.ParameterDataType != null)
+                    {
+                        function.Value = GetMonthlyDataValue(context, planId, fiscalYearId, positionId, parameterFromDB);
+                    }
+                    else
+                    {
+                        function.Value = GetMonthlyFunctionValue(context, positionId, function.TableName,
+                                                                 function.ColumnName, null);
+                    }
+                }
+            }
+        }
+
+        private IGlobal<decimal> CreateGlobalsFromDb(Parameter parameter)
+        {
+            var context = new DisneyHCMLatamPlanningEntities();
+
+            var global = new Global<decimal>
+            {
+                Name = parameter.Name,
+                Description = parameter.Description,
+                Id = parameter.ParameterId,
+                IsModifiable = parameter.IsModifiable,
+                IsAccumulator = parameter.IsAccumulator,
+                IsConstant = parameter.IsConstant,
+                ParameterType = (FromDisney.ParameterType)parameter.ParameterTypeId,
+                Company = (context.Companies.FirstOrDefault(p => p.CompanyID == parameter.CompanyId).ToModel()),
+                Value = SetDictionaryFromValue(0)
+            };
+
+            if (global.ParameterType == FromDisney.ParameterType.Constant)
+            {
+                global.MonthlyParameter = new List<MonthlyParameter<decimal>>();
+
+                var monthlyValues = context.ParameterValues
+                                    .Include("ParameterMonthValues.ParameterValue.FiscalYear")
+                                    .Where(p => p.ParameterId == parameter.ParameterId)
+                                    .ToList();
+
+                monthlyValues.ForEach(x =>
+                {
+                    var monthlyParameter = new MonthlyParameter<decimal>
+                    {
+                        FiscalYearId = x.FiscalYear.FiscalYearID,
+                        FiscalYearCode = x.FiscalYear.Code,
+                        Value = new Dictionary<Month, decimal>()
+                    };
+
+                    for (int i = 1; i <= 12; i++)
+                    {
+                        decimal value = 0;
+
+                        try
+                        {
+                            value = x.ParameterMonthValues.ToList()[i - 1].Value;
+                        }
+                        catch (Exception)
+                        {
+                            value = 0;
+                        }
+
+                        monthlyParameter.Value.Add((Month)i, value);
+                    }
+
+                    global.MonthlyParameter.Add(monthlyParameter);
+                });
+            }
+            return global;
+        }
+
+        private IGlobal<decimal> CreateGlobalsFromDb(Parameter parameter, string fiscalYear)
+        {
+            var context = new DisneyHCMLatamPlanningEntities();
+
+            var global = new Global<decimal>
+                                            {
+                                                Name = parameter.Name,
+                                                Description = parameter.Description,
+                                                Id = parameter.ParameterId,
+                                                IsModifiable = parameter.IsModifiable,
+                                                IsAccumulator = parameter.IsAccumulator,
+                                                IsConstant = parameter.IsConstant,
+                                                ParameterType = (FromDisney.ParameterType)parameter.ParameterTypeId,
+                                                Company = (context.Companies.FirstOrDefault(p => p.CompanyID == parameter.CompanyId).ToModel()),
+                                                Value = SetDictionaryFromValue(0)
+                                            };
+
+            if (global.ParameterType == FromDisney.ParameterType.Constant)
+            {
+                global.MonthlyParameter = new List<MonthlyParameter<decimal>>();
+
+                var monthlyValues = context.ParameterValues
+                                    .Include("ParameterMonthValues.ParameterValue.FiscalYear")
+                                    .Where(p => p.ParameterId == parameter.ParameterId)
+                                    .ToList();
+
+                monthlyValues.ForEach(x =>
+                {
+                    var monthlyParameter = new MonthlyParameter<decimal>
+                                               {
+                                                   FiscalYearId = x.FiscalYear.FiscalYearID,
+                                                   FiscalYearCode = x.FiscalYear.Code,
+                                                   Value = new Dictionary<Month, decimal>()
+                                               };
+
+                    for (int i = 1; i <= 12; i++)
+                    {
+                        decimal value = 0;
+
+                        try
+                        {
+                            value = x.ParameterMonthValues.ToList()[i - 1].Value;
+                        }
+                        catch (Exception)
+                        {
+                            value = 0;
+                        }
+
+                        monthlyParameter.Value.Add((Month)i, value);
+                    }
+
+                    global.MonthlyParameter.Add(monthlyParameter);
+                });
+            }
+
+            if (global.MonthlyParameter != null) updateGridMonthValues(global, fiscalYear);
+            return global;
+        }
+
+        private Global<decimal> updateGridMonthValues(Global<decimal> parameter, string fiscalYear)
+        {
+            var monthlyParams = parameter.MonthlyParameter;
+
+            foreach (MonthlyParameter<Decimal> val in monthlyParams)
+            {
+                if (val.FiscalYearId.ToString().Trim().Equals(fiscalYear))
+                {
+                    parameter.Jan = val.Value.ElementAt(0).Value;
+                    parameter.Feb = val.Value.ElementAt(1).Value;
+                    parameter.Mar = val.Value.ElementAt(2).Value;
+                    parameter.Apr = val.Value.ElementAt(3).Value;
+                    parameter.May = val.Value.ElementAt(4).Value;
+                    parameter.Jun = val.Value.ElementAt(5).Value;
+                    parameter.Jul = val.Value.ElementAt(6).Value;
+                    parameter.Aug = val.Value.ElementAt(7).Value;
+                    parameter.Sep = val.Value.ElementAt(8).Value;
+                    parameter.Oct = val.Value.ElementAt(9).Value;
+                    parameter.Nov = val.Value.ElementAt(10).Value;
+                    parameter.Dec = val.Value.ElementAt(11).Value;
+                }
+            }
+            return parameter;
+        }
+
+        private IForecastPlan CreateForecastPlanFromDbWithoutPositions(DisneyHCMLatamPlanningEntities context, SBForecastPlan forecastPlan)
+        {
+            return this.CreateForecastPlan(context, forecastPlan);
+        }
+
+
+        public IGlobal<decimal> GetGlobalParameter(int id)
+        {
+            using (var context = new DisneyHCMLatamPlanningEntities())
+            {
+                var parameter = context.Parameters.FirstOrDefault(x => x.ParameterId == id);
+
+                return parameter.ToModel();
+            }
+        }
+
+        public List<IGlobal<decimal>> GetGlobalParameters()
+        {
+            using (var context = new DisneyHCMLatamPlanningEntities())
+            {
+                var globals =
+                    context.Parameters.ToList();
+
+                var list = new List<IGlobal<decimal>>();
+
+                globals.ForEach(x => list.Add(x.ToModel()));
+
+                return list;
+            }
+        }
+
+        public List<IExpenseType> GetExpenseTypes()
+        {
+            using (var context = new DisneyHCMLatamPlanningEntities())
+            {
+                var expenseTypes =
+                    context.ExpenseTypes.ToList();
+
+                var list = new List<IExpenseType>();
+
+                expenseTypes.ForEach(x => list.Add(x.ToModel()));
+
+                return list;
+            }
+        }
+
+        public List<IExpenseGroup> GetExpenseGroups()
+        {
+            using (var context = new DisneyHCMLatamPlanningEntities())
+            {
+                var expenseGroups =
+                    context.ExpenseGroups.ToList();
+
+                var list = new List<IExpenseGroup>();
+
+                expenseGroups.ForEach(x => list.Add(x.ToModel()));
+
+                return list;
+            }
+        }
+
+        public List<IGLAccount> GetGLAccounts()
+        {
+            using (var context = new DisneyHCMLatamPlanningEntities())
+            {
+                var glAccounts =
+                    context.GLAccounts.ToList();
+
+                var list = new List<IGLAccount>();
+
+                glAccounts.ForEach(x => list.Add(x.ToModel()));
+
+                return list;
+            }
+        }
+
+        public bool SaveGlobalParameter(IGlobal<decimal> global)
+        {
+            try
+            {
+                using (var context = new DisneyHCMLatamPlanningEntities())
+                {
+                    var model = global.ToDbModel(context);
+
+                    if (model.ParameterId == 0)
+                        context.Parameters.AddObject(model);
+
+                    context.SaveChanges();
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+
+            return true;
+        }
+
+        public bool DeleteParameter(int id)
+        {
+            bool result = false;
+
+            using (var context = new DisneyHCMLatamPlanningEntities())
+            {
+                var param = context.Parameters.FirstOrDefault(p => p.ParameterId == id);
+
+                if (param != null)
+                {
+                    context.DeleteObject(param);
+                    context.SaveChanges();
+                    result = true;
+                }
+            }
+
+            return result;
+        }
+
+
+        public List<Scheme<decimal>> GetSchemes(int? schemeId, int? hcTypeCode, bool? status, String createdBy, DateTime? createdDate, String modifiedBy, DateTime? modifiedDate)
+        {
+            List<Scheme<decimal>> schemes = new List<Scheme<decimal>>();
+
+            using (var context = new DisneyHCMLatamPlanningEntities())
+            {
+                var hcType = context.HCTypes.FirstOrDefault(x => x.HCTypeID == hcTypeCode);
+                IQueryable<Scheme> schemeQuery = context.Schemes.Include("Company");
+
+                if (schemeId != null)
+                {
+                    schemeQuery = schemeQuery.Where(s => s.SchemeId == schemeId);
+                }
+
+                if (hcType != null)
+                {
+                    schemeQuery = schemeQuery.Where(s => s.HCTypeId == hcType.HCTypeID);
+                }
+
+                if (status != null)
+                {
+                    schemeQuery = schemeQuery.Where(s => s.IsActive == status);
+                }
+
+                if (!String.IsNullOrEmpty(createdBy))
+                {
+                    schemeQuery = schemeQuery.Where(s => s.UserName == createdBy);
+                }
+
+                if (createdDate != null)
+                {
+                    schemeQuery = schemeQuery.Where(s => s.CreationDate == createdDate);
+                }
+
+                if (!String.IsNullOrEmpty(modifiedBy))
+                {
+                    schemeQuery = schemeQuery.Where(s => s.ModifiedUserName == modifiedBy);
+                }
+
+                if (modifiedDate != null)
+                {
+                    schemeQuery = schemeQuery.Where(s => s.ModificationDate == modifiedDate);
+                }
+
+                List<Scheme> dbSchemes = schemeQuery.ToList();
+                foreach (Scheme s in dbSchemes)
+                {
+                    schemes.Add(s.ToModel());
+                }
+            }
+            return schemes;
+        }
+
+        public Concept<decimal> GetConceptById(int conceptId)
+        {
+            Concept<decimal> concept = null;
+
+            using (var context = new DisneyHCMLatamPlanningEntities())
+            {
+                var conceptDB = context.Concepts
+                   .Include("GLAccount")
+                   .Include("Output1")
+                   .Include("Output2")
+                   .Include("Parameter1")
+                   .Include("Parameter2")
+                   .Include("Parameter3")
+                   .Include("Parameter4")
+                   .Include("ConceptsValidMonths")
+                   .FirstOrDefault(x => x.ConceptId == conceptId);
+
+                if (conceptDB != null)
+                {
+                    concept = conceptDB.ToModel();
+                }
+
+                return concept;
+            }
+        }
+
+        public List<Concept<decimal>> GetConceptsBySchemeId(int schemeId)
+        {
+            List<Concept<decimal>> concepts = new List<Concept<decimal>>();
+            using (var context = new DisneyHCMLatamPlanningEntities())
+            {
+                var conceptQuery = context.Concepts.Include("GLAccount").Where(c => c.SchemaId == schemeId);
+                List<Concept> dbConcepts = conceptQuery.ToList();
+                if (concepts != null)
+                {
+                    foreach (Concept c in dbConcepts)
+                    {
+                        Concept<decimal> concept = c.ToModel();
+                        concepts.Add(concept);
+                    }
+                }
+            }
+            return concepts;
+        }
+
+        public void UpdateScheme(Scheme newScheme)
+        {
+            using (var context = new DisneyHCMLatamPlanningEntities())
+            {
+                var scheme = context.Schemes.Where(s => s.SchemeId == newScheme.SchemeId).SingleOrDefault();
+                if (scheme != null)
+                {
+                    scheme.CompanyId = newScheme.CompanyId;
+                    scheme.HCTypeId = newScheme.HCTypeId;
+                    scheme.ModifiedUserName = newScheme.ModifiedUserName;
+                    scheme.ModificationDate = DateTime.Now;
+                }
+                context.SaveChanges();
+            }
+        }
+
+        public void AddScheme(Scheme newScheme)
+        {
+            using (var context = new DisneyHCMLatamPlanningEntities())
+            {
+                context.Schemes.AddObject(newScheme);
+                context.SaveChanges();
+            }
+        }
+
+
+        public void DeleteScheme(int key)
+        {
+            using (var context = new DisneyHCMLatamPlanningEntities())
+            {
+                var scheme = context.Schemes.Where(s => s.SchemeId == key).SingleOrDefault();
+                context.Schemes.DeleteObject(scheme);
+                context.SaveChanges();
+            }
+        }
+
+
+        public int CopyScheme(int key, Scheme scheme)
+        {
+            using (var context = new DisneyHCMLatamPlanningEntities())
+            {
+                var conceptQuery = context.Concepts.Include("GLAccount").Where(c => c.SchemaId == key);
+                List<Concept> dbConcepts = conceptQuery.ToList();
+
+                foreach (Concept c in dbConcepts)
+                {
+                    scheme.Concepts.Add(c);
+                }
+                context.Schemes.AddObject(scheme);
+                context.SaveChanges();
+                return scheme.SchemeId;
+            }
+        }
+
+        public void UpdateConceptFilterParametersWithCurrentFunctionValues(int planId, int fiscalYearId, int positionId, IConcept concept)
+        {
+            var filters = concept.GetFilters();
+            foreach (Core.Filter<Decimal, bool> filter in filters)
+            {
+                foreach (var parameter in filter.GetParameters())
+                {
+                    var function = parameter as Function<decimal>;
+                    if (function == null) continue;
+                    using (var context = new DisneyHCMLatamPlanningEntities())
+                    {
+                        var parameterFromDB = context.Parameters.FirstOrDefault(x => x.ParameterId == function.Id);
+                        if (parameterFromDB.ParameterDataType != null)
+                        {
+                            function.Value = GetMonthlyDataValue(context, planId, fiscalYearId, positionId, parameterFromDB);
+                        }
+                        else
+                        {
+                            function.Value = GetMonthlyFunctionValue(context, positionId, function.TableName,
+                                                                     function.ColumnName, filter.FilterType);
+                        }
+                    }
+                }
+
+            }
+        }
+    }
+}
